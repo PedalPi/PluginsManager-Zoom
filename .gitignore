@@ -2,3 +2,4 @@ MidiPedalController
 __pycache__
 .idea/
 *.pyc
+PedalController_MidiMultistompController.egg-info

@@ -1,8 +1,8 @@
-from banks_manager import BanksManager
-from model.bank import Bank
-from model.pedalboard import Pedalboard
+from pluginsmanager.banks_manager import BanksManager
+from pluginsmanager.model.bank import Bank
+from pluginsmanager.model.pedalboard import Pedalboard
 
-from zoomgseries.zoomgseriesbuilder import ZoomGSeriesBuilder
+from zoomgseries.zoomgseries_builder import ZoomGSeriesBuilder
 from zoomgseries.zoomgseries_manager import ZoomGSeriesObserver
 
 ZoomG3 = BanksManager()

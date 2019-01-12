@@ -1,10 +1,10 @@
-from model.param import Param
-from model.effect import Effect
-
-from util.dict_tuple import DictTuple
+from pluginsmanager.model.param import Param
+from pluginsmanager.model.effect import Effect
 
 import json
 import os
+
+from pluginsmanager.util.dict_tuple import DictTuple
 
 
 class ZoomGSeriesBuilder:
