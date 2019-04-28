@@ -3,3 +3,4 @@ __pycache__
 .idea/
 *.pyc
 PedalController_MidiMultistompController.egg-info
+venv

@@ -39,16 +39,17 @@ setup(
     license="Apache Software License v2",
 
     packages=[
-        'zoomgseries',
-        'zoomgseries/database',
-        'zoomgseries/model',
+        'zoom',
+        'zoom/database',
+        'zoom/model',
     ],
     package_data={
-        'zoomgseries/database': ['ZoomG3v2.json']
+        'zoom/database': ['ZoomG3v2.json']
     },
     install_requires=[
-        #'JACK-Client',
-        #'pyaudio'
+        'PedalPi-PluginsManager',
+        'mido',
+        'python-rtmidi'
     ],
 
     test_suite='test',

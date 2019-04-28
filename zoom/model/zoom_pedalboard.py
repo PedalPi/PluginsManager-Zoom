@@ -1,4 +1,4 @@
-from model.pedalboard import Pedalboard
+from pluginsmanager.model.pedalboard import Pedalboard
 
 
 class LevelError(Exception):
@@ -8,7 +8,7 @@ class LevelError(Exception):
         self.message = message
 
 
-class ZoomGSeriesPedalboard(Pedalboard):
+class ZoomPedalboard(Pedalboard):
     def __init__(self, name):
         super().__init__(name)
         self._level = 0

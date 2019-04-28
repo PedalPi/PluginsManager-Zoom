@@ -1,4 +1,4 @@
-class G3v2Effects(object):
+class G3Effects(object):
     effects = {
         0: 'M-FILTER',
         1: 'THE VIBE',
