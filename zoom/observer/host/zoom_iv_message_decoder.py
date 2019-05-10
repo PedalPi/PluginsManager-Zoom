@@ -4,6 +4,15 @@ from zoom.zoom_builder import ZoomBuilder
 
 class ZoomIVMessageDecoder:
     def decode(self, message):
+        # Commands (F0 52 00 5A xx)
+        # 08: Specific path
+        # 28: Current path / Foot switch expression
+        # 31: Global info: Tempo / Signal path / Auto save / Foot switch (min, max)
+        # 31: Patch info: Patch name / Patch volume / Ctrl switch assignment
+        # 31: Effect param value:
+        # 32: Patch saved
+        print(message.hex())
+
         if message.type == 'program_change':
             print('Current patch is', "'" + str(+message.program) + "'")
 
@@ -14,9 +23,13 @@ class ZoomIVMessageDecoder:
             return self.decode_specific_path(message)
 
         elif len(message) == 15:
-            print('Device info', message)
+            print('Device info', message.hex())
 
         else:
+            # Path saved in x position
+            # F0 52 00 5A 32 01 00 00 xx 00 00 00 00 00 F7
+            # Swap xx <--> yy
+            # F0 52 00 5A 32 02 00 00 xx 00 00 yy 00 00 F7
             print(message, '\n', message.hex())
             print('Size', len(message))
 
@@ -28,8 +41,17 @@ class ZoomIVMessageDecoder:
         device_id = message.data[1]
         model_number = message.data[2]
 
+        command_number = message.data[3]  # 08
+
         name = bytes(message.data[0x65:0x69] + message.data[0x6A:0x70]).decode()
         pedalboard = ZoomPedalboard(name=name)
+        print(message.data[6+4] & 0b00000001)
+        print(message.data[19+4] & 0b00000001)
+        print(message.data[33+4] & 0b00000001)
+        print(message.data[47+4] & 0b00000001)
+        print(message.data[60+4] & 0b00000001)
+        print(message.data[74+4] & 0b00000001)
+        '''
         pedalboard_number = x
 
         for i in range(0, 6):
@@ -43,6 +65,7 @@ class ZoomIVMessageDecoder:
         print(pedalboard)
 
         zoom.pedalboards[pedalboard_number] = pedalboard
+        '''
 
         '''
         # Read the first four characters of the name

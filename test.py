@@ -8,7 +8,7 @@ zoom.connect(ZoomHost())
 
 zoom.load_data()
 print('ok')
-time.sleep(3)
+time.sleep(2)
 
 
 #pedalboard = zoom.current_pedalboard
