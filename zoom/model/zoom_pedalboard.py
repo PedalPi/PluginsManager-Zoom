@@ -1,11 +1,6 @@
 from pluginsmanager.model.pedalboard import Pedalboard
 
-
-class LevelError(Exception):
-
-    def __init__(self, message):
-        super(LevelError, self).__init__(message)
-        self.message = message
+from zoom.exception.exceptions import InvalidLevelException
 
 
 class ZoomPedalboard(Pedalboard):
@@ -32,7 +27,7 @@ class ZoomPedalboard(Pedalboard):
                 0,
                 120
             )
-            raise LevelError(msg)
+            raise InvalidLevelException(msg)
 
         if self._level == new_value:
             return

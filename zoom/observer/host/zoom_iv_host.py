@@ -1,5 +1,6 @@
 import mido
 
+from zoom.observer.host.protocol import MidiProtocol
 from zoom.observer.host.zoom_iv_connection import ZoomIVConnection
 from zoom.observer.host.zoom_iv_message_decoder import ZoomIVMessageDecoder
 from zoom.observer.host.zoom_iv_message_encoder import ZoomIVMessageEncoder
@@ -23,7 +24,7 @@ class ZoomIVHost:
         self.message_decoder = ZoomIVMessageDecoder()
 
     def initialize(self):
-        device_info = mido.Message('sysex', data=[0x7E, 0x00, 0x06, 0x01])
+        device_info = mido.Message('sysex', data=MidiProtocol.device_identify_request())
 
         self.connection.send(device_info)
         self.connection.send(self.message_encoder.enable_editor())

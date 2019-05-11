@@ -49,12 +49,12 @@ class ZoomEffect(Effect):
         self.instance = None
 
     def __str__(self):
-        return self.plugin['name']
+        return f"{self.plugin['name']} - Active: {self.active}"
 
     @property
     def __dict__(self):
         return {
-            'technology': 'zoom',
+            'technology': 'zoom-zfx',
             'plugin': self.plugin['name'],
             'active': self.active,
             'params': [param.json for param in self.params],

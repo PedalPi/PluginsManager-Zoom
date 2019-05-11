@@ -16,5 +16,5 @@ class ZoomIVConnection(object):
         self.midiin.callback = callback
 
     def send(self, message):
-        print(message.hex())
+        print('sent', message.hex())
         self.midiout.send(message)

@@ -221,7 +221,7 @@ class apatch:
 
         self.name = name.replace(/ +$/,"")
         flen = (len>=146)?6:4
-        for f in range(f):
+        for f in range(6):
             for p in range(11):
                 if f >= flen:
                     self.fx[f][p]=0

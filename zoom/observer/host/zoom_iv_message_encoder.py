@@ -71,10 +71,8 @@ class ZoomIVMessageEncoder(object):
                      [2..7] - Set param value
         :return:
         """
-        value2 = 0
-        if value >= 128:
-            value -= 128
-            value2 = 0b00000001
+        value2 = value >> 7
+        value = value & 0b01111111
 
         return self.zoom_sysex([0x31, position, effect_message_type, value, value2])
 
@@ -104,33 +102,7 @@ class ZoomIVMessageEncoder(object):
         return mido.Message('control_change', control=0x75, value=0x64)
 
     def deprecated_you_can_talk(self):
-        return self.zoom_sysex([16])
-
-
-def tratar_mensagem(mensagem):
-    '''
-    [f0 52 00 5a 28 50 0c 00
-     00 02 00 00 00 02 64 00
-
-     00 00 00 0a 00 40 00 02
-     00 00 00 64 00 02 00 00
-
-     00 2e 0c 00 01 00 20 03
-     00 00 00 00 00 20 00 56
-
-     00 00 00 00 00 01 00 00
-     00 00 00 00 56 00 00 00
-
-     00 00 00 00 00 04 00 00
-     00 00 56 00 00 00 00 00
-
-     00 00 00 00 00 00 00 00
-     64 00 1c 00 00 20 00 40
-
-     58 20 20 20 20 00 20 20
-     20 20 20 20 00 f7]
-    '''
-    range(5, 110, 8)
+        return self.zoom_sysex([0x10])
 
 
 ## Decode
