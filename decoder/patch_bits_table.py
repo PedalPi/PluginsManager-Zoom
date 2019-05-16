@@ -24,7 +24,7 @@ def read_params_file(file):
     return effects
 
 
-def read_effect_status_file(file):
+def read_effect_file(file):
     effects = defaultdict(list)
 
     with open(file) as csv_file:
@@ -56,6 +56,17 @@ def position(diff):
     return offset, bit_position
 
 
+def populate(diff, data):
+    offset, bit_position = position(diff)
+
+    if pedalboard_data[offset, bit_position] != 0:
+        raise Exception(f'Try populate {data} in {[offset, bit_position]}, '
+                        f'but the position already in use: {pedalboard_data[offset, bit_position]}. '
+                        f'Please try rescan configurations with bigger sleep time.')
+
+    pedalboard_data[offset, bit_position] = data
+
+
 # pip install numpy
 import numpy as np
 
@@ -74,18 +85,10 @@ for effect_index, effect in effects.items():
             if len(diffs) != 1:
                 raise Exception(f'More than one changes are detected for effect {effect_index} param {param_index}. Why? {diffs}')
 
-            offset, bit_position = position(diffs[0])
-            information = f'{effect_index}p{param_index}b{bit}'
-
-            if pedalboard_data[offset, bit_position] != 0:
-                raise Exception(f'Try populate {information} in {[offset, bit_position]}, '
-                                f'but the position already in use: {pedalboard_data[offset, bit_position]}. '
-                                f'Please try rescan configurations with bigger sleep time.')
-
-            pedalboard_data[offset, bit_position] = information
+            populate(diffs[0], f'{effect_index}p{param_index}b{bit}')
 
 
-effects = read_effect_status_file('decoder/data_effects_status.csv')
+effects = read_effect_file('decoder/data_effects_status.csv')
 for effect_index, effect in effects.items():
     data_base, data = filter_data(effect)
 
@@ -94,16 +97,25 @@ for effect_index, effect in effects.items():
     if len(diffs) != 1:
         raise Exception(f'More than one changes are detected for effect {effect_index}. Why? {diffs}')
 
-    offset, bit_position = position(diffs[0])
-    information = f'{effect_index}EfOn'
+    populate(diffs[0], f'{effect_index}EfOn')
 
-    if pedalboard_data[offset, bit_position] != 0:
-        raise Exception(f'Try populate {information} in {[offset, bit_position]}, '
-                        f'but the position already in use: {pedalboard_data[offset, bit_position]}. '
-                        f'Please try rescan configurations with bigger sleep time.')
+effects = read_effect_file('decoder/data_effects.csv')
+for effect_index, effect in effects.items():
+    data_base, data = filter_data(effect)
 
-    pedalboard_data[offset, bit_position] = information
+    for bit, data_i in enumerate(data):
+        diffs = compare(data_base, data_i)
 
+        if len(diffs) != 1:
+            raise Exception(f'More than one changes are detected for effect {effect_index}. Why? {diffs}')
+
+        populate(diffs[0], f'{effect_index}tb{bit}')
+
+
+# Effect name
+# Volume
+# Visor position
+# Footswitch
 
 # Left to right
 pedalboard_data_ltor = np.flip(pedalboard_data, axis=1)
