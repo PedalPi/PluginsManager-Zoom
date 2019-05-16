@@ -43,6 +43,16 @@ def read_effect_file(file):
     return effects
 
 
+def read_messages_file(file):
+    messages = []
+    with open(file) as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=',')
+        for row in csv_reader:
+            messages.append([int(e) for e in row])
+
+    return messages
+
+
 def filter_data(param_data):
     # Filter all responses with len(data) > 40 and ignore tail (checksum)
     data = [d[:113] for d in param_data if len(d) > 40]
@@ -115,7 +125,22 @@ for effect_index, effect in effects.items():
 # Effect name
 # Volume
 # Visor position
+#data_base, data = filter_data(read_messages_file('decoder/manual_data.csv'))
+#for bit, data_i in enumerate(data):
+#    diffs = compare(data_base, data_i)
+#    print(diffs)
+#
+#    populate(diffs[0], f'{effect_index}tb{bit}')
+
 # Footswitch
+for i in range(7):
+    pedalboard_data[93, i] = f'volumeb{i}'
+
+# Effect name
+for i, e in enumerate(list(range(98, 102)) + list(range(103, 109))):
+    for j in range(7):
+        pedalboard_data[e, j] = f'name{i}b{j}'
+
 
 # Left to right
 pedalboard_data_ltor = np.flip(pedalboard_data, axis=1)

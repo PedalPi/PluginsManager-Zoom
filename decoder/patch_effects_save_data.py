@@ -41,3 +41,9 @@ with open("decoder/data_effects_2.csv", "w+") as file:
 
     # Don't close connection before register last command
     time.sleep(TIME_WAIT*5)
+
+for effect in range(6):
+    zoom.host.host.connection.send(zoom.host.host.message_encoder.set_effect(effect, 0))
+
+    for j in range(9):
+        zoom.host.host.connection.send(zoom.host.host.message_encoder.set_param(effect, param_position=j, new_value=0))
