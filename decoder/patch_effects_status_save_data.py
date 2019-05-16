@@ -8,7 +8,7 @@ from zoom.zoomg3v2 import ZoomG3v2
 
 # (name, id, max_value)
 effects_per_param = params_with_max_value_by_position()
-TIME_WAIT = 8
+TIME_WAIT = 10
 
 
 zoom = ZoomG3v2()
@@ -36,3 +36,8 @@ with open("decoder/data_effects_status.csv", "w+") as file:
 
         zoom.host.host.connection.send(zoom.host.host.message_encoder.effect_on(effect))
         zoom.load_data()
+
+        time.sleep(TIME_WAIT)
+
+    # Don't close connection before register last command
+    time.sleep(TIME_WAIT*5)

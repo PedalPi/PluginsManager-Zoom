@@ -24,10 +24,10 @@ def write_data(msg: Message):
     file.write(str(msg.data).replace('(', '').replace(')', '') + '\n')
 
 
-with open("decoder/data_params_3.csv", "w+") as file:
+with open("decoder/data_params.csv", "w+") as file:
     zoom.host.host.connection.callback = write_data
 
-    for effect in range(4, 6):
+    for effect in range(6):
         for param, (_, effect_id, max_param_value) in enumerate(effects_per_param):
             time.sleep(TIME_WAIT)
             print(f'EFFECT {effect} PARAM {param}')
