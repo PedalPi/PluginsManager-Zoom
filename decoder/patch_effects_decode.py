@@ -1,8 +1,8 @@
 import csv
 from collections import defaultdict
 
-from decoder.decoder_util import total_zero_bits_left
-from decoder.diff import param_bits
+from decoder.lib.decoder_util import total_zero_bits_left
+from decoder.lib.diff import param_bits
 
 effects = defaultdict(list)
 

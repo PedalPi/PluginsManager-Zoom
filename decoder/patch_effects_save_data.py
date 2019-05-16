@@ -1,9 +1,11 @@
 import time
 
+from mido import Message
+
 from zoom.observer.zoom_host import ZoomHost
 from zoom.zoomg3v2 import ZoomG3v2
 
-TIME_WAIT = 7
+TIME_WAIT = 8
 
 
 zoom = ZoomG3v2()
@@ -12,12 +14,15 @@ zoom.connect(ZoomHost())
 time.sleep(1)
 
 
-with open("decoder/data_effects.csv", "w+") as file:
-    def function(msg):
-        if msg.type == 'sysex':
-            file.write(str(msg.data).replace('(', '').replace(')', '') + '\n')
+def write_data(msg: Message):
+    if msg.type != 'sysex':
+        return
 
-    zoom.host.host.connection.callback = function
+    file.write(str(msg.data).replace('(', '').replace(')', '') + '\n')
+
+
+with open("decoder/data_effects.csv", "w+") as file:
+    zoom.host.host.connection.callback = write_data
 
     for effect in range(6):
         print(f'EFFECT {effect}')

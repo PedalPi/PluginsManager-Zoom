@@ -1,4 +1,4 @@
-from decoder.decoder_util import shift_bits
+from decoder.lib.decoder_util import shift_bits
 from zoom.model.zoom.zoom_effect import ZoomEffect
 
 
