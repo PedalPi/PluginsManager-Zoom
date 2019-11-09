@@ -7,42 +7,49 @@ from decoder.lib.diff import param_bits
 effects = defaultdict(lambda: defaultdict(list))
 
 
-#with open('decoder/data_params.csv') as csv_file:
-with open('data_params.csv') as csv_file:
-    csv_reader = csv.reader(csv_file, delimiter=',')
+def read_file(file):
+    #with open('decoder/data_params.csv') as csv_file:
+    with open(file) as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=',')
 
-    current_effect = 0
-    current_param = 0
+        current_effect = 0
+        current_param = 0
 
-    for row in csv_reader:
-        if len(row) == 2:
-            current_effect, current_param = int(row[0]), int(row[1])
-            continue
+        # Read line
+        for row in csv_reader:
+            if len(row) == 2:
+                current_effect, current_param = int(row[0]), int(row[1])
+                continue
 
-        effects[current_effect][current_param].append([int(e) for e in row])
+            message = [int(e) for e in row]
+            effects[current_effect][current_param].append(message)
 
-
-effect_params_bits = []
-
-for i, effect in effects.items():
-    params_bits = []
-    for j, param_data in effect.items():
-        # filter all responses with len(data) > 40
-        data = [d for d in param_data if len(d) > 40]
-
-        # Ignore first message (old effect)
-        bits = param_bits([d[:113] for d in data][1:])
-        params_bits.append(bits)
-
-    effect_params_bits.append(params_bits)
+    return effects
 
 
+def extract_diffs(effects):
+    effect_params_bits  = []
+    for i, effect in effects.items():
+        params_bits = []
+        for j, param_data in effect.items():
+            # filter all responses with len(data) > 40
+            filtered_data = [d for d in param_data if len(d) > 40]
 
+            # Ignore final data
+            filtered_data = [d[:113] for d in filtered_data]
+            bits = param_bits(filtered_data)
+            params_bits.append(bits)
+
+        effect_params_bits.append(params_bits)
+    return effect_params_bits
+
+effects = read_file('data_params.csv')
+effect_params_bits = extract_diffs(effects)
 effects_data = []
-for effect in effect_params_bits:
+for i, effect in enumerate(effect_params_bits):
     params_data = []
 
-    for param in effect:
+    for j, param in enumerate(effect):
         param_data = []
         current_position = 0
 

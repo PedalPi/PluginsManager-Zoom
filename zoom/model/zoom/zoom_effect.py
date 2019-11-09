@@ -49,7 +49,7 @@ class ZoomEffect(Effect):
         self.instance = None
 
     def __str__(self):
-        return f"{self.plugin['name']} - Active: {self.active}"
+        return f"{self.plugin['name']} {'on' if self.active else 'off'} ({[param.__str__() for param in self.params]})"
 
     @property
     def __dict__(self):

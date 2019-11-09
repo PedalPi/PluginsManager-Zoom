@@ -1,6 +1,8 @@
 from itertools import count
 from typing import List, Tuple
 
+from attr import dataclass
+
 
 class Diff:
 
@@ -25,6 +27,18 @@ class Diff:
         return f'({self.position}, {bin(self.mask)})'
 
 
+class ClosedRange:
+    start: int
+    stop: int
+
+    def __init__(self, start, stop):
+        self.start = start
+        self.stop = stop
+
+    def __repr__(self):
+        return f"[{self.start}, {self.stop}]"
+
+
 def compare(base, other):
     """
     :return List[Diff]: All diff between base and other
@@ -33,16 +47,16 @@ def compare(base, other):
 
 
 def param_bits(data: List[Tuple[int]]):
-    base = data[0]
+    base, changes = data[0], data[1:]
 
-    diffs: List[List[Diff]] = [compare(base, other) for other in data]
+    diffs: List[List[Diff]] = [compare(base, change) for change in changes]
 
     # Make masks joining messages
     new_data = {}
-    current_range = range(0)
-    current_diff = diffs[1][0]
+    current_range = ClosedRange(0, 0)
+    current_diff = diffs[0][0]
 
-    for index, diffs_a, diffs_b in zip(count(), diffs[1:], diffs[2:]):
+    for index, diffs_a, diffs_b in zip(count(), diffs, diffs[1:]):
         if len(diffs_a) == 0:
             print(f'{index} - No diff detected!!!')
             continue
@@ -57,10 +71,10 @@ def param_bits(data: List[Tuple[int]]):
         if diff_a.same_position(diff_b) \
         and diff_a.is_next(diff_b):
             current_diff = current_diff | diff_b
-            current_range = range(current_range.start, current_range.stop+1)
+            current_range = ClosedRange(current_range.start, current_range.stop+1)
         else:
             new_data[current_range] = current_diff
-            current_range = range(current_range.stop+1, index+1)
+            current_range = ClosedRange(current_range.stop+1, index+1)
             current_diff = diff_b
 
     new_data[current_range] = current_diff

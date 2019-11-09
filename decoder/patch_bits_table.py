@@ -122,8 +122,6 @@ for effect_index, effect in effects.items():
         populate(diffs[0], f'{effect_index}tb{bit}')
 
 
-# Effect name
-# Volume
 # Visor position
 #data_base, data = filter_data(read_messages_file('decoder/manual_data.csv'))
 #for bit, data_i in enumerate(data):
@@ -132,7 +130,10 @@ for effect_index, effect in effects.items():
 #
 #    populate(diffs[0], f'{effect_index}tb{bit}')
 
-# Footswitch
+# Control Switch
+# Expression pedal
+
+# Volume
 for i in range(7):
     pedalboard_data[93, i] = f'volumeb{i}'
 

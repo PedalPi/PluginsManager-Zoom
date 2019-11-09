@@ -44,3 +44,6 @@ class ZoomParam(Param):
     @property
     def symbol(self):
         return self.data['name']
+
+    def __str__(self):
+        return f"{self.symbol}: {self.value} [{self.minimum},{self.maximum}]"
