@@ -1,3 +1,5 @@
+from pluginsmanager.banks_manager import BanksManager
+
 from zoom.model.zoom_pedalboard import ZoomPedalboard
 from zoom.observer.host.protocol import MidiProtocol
 from zoom.observer.host.zoomg3v2_patch import ZoomG3v2Patch
@@ -5,6 +7,10 @@ from zoom.zoom_builder import ZoomBuilder
 
 
 class ZoomIVMessageDecoder:
+
+    def __init__(self, update_model):
+        self.update_model = update_model
+
     def decode(self, message):
         # Commands (F0 52 00 5A xx)
         # 08: Specific path
@@ -16,13 +22,13 @@ class ZoomIVMessageDecoder:
         print(message.hex())
 
         if message.type == 'program_change':
-            print('Current patch is', "'" + str(+message.program) + "'")
+            self.update_model(current_patch_id=+message.program)
 
         elif len(message) == 110:
             print('Current patch', message)
 
         elif len(message) == 120:
-            return self.decode_specific_path(message)
+            self.update_model(pedalboard=self.decode_specific_path(message))
 
         elif len(message) == 15:
             print('Device info', message.hex())
@@ -61,3 +67,5 @@ class ZoomIVMessageDecoder:
         # TODO: Pedalboard volume
         # TODO: CTRL SW/PDL
         # TODO: PDL DST
+
+        return pedalboard
