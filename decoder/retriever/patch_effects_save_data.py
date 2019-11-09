@@ -21,7 +21,7 @@ def write_data(msg: Message):
     file.write(str(msg.data).replace('(', '').replace(')', '') + '\n')
 
 
-with open("decoder/data_effects_2.csv", "w+") as file:
+with open("decoder/data_effects.csv", "w+") as file:
     zoom.host.host.connection.callback = write_data
 
     for effect in range(2, 6):

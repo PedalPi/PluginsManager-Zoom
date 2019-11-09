@@ -1,6 +1,14 @@
 from itertools import count
 
 
+def decode_message(data, bits_location):
+    value = 0
+    for position, mask, shift in bits_location:
+        value |= shift_bits(data[position] & mask, shift)
+
+    return value
+
+
 def shift_bits(bits: int, total: int):
     if total > 0:
         return bits << total

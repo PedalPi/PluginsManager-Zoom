@@ -8,7 +8,6 @@ effects = defaultdict(lambda: defaultdict(list))
 
 
 def read_file(file):
-    #with open('decoder/data_params.csv') as csv_file:
     with open(file) as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
 
@@ -46,10 +45,10 @@ def extract_diffs(effects):
 effects = read_file('data_params.csv')
 effect_params_bits = extract_diffs(effects)
 effects_data = []
-for i, effect in enumerate(effect_params_bits):
+for effect in effect_params_bits:
     params_data = []
 
-    for j, param in enumerate(effect):
+    for param in effect:
         param_data = []
         current_position = 0
 

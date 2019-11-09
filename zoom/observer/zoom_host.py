@@ -31,9 +31,9 @@ class ZoomHost(HostObserver):
     def load_data(self):
         self.host.connection.send(self.host.message_encoder.current_patch_number())
 
-        #for i in range(100):
-        #    self.host.connection.send(self.host.message_encoder.specified_patch_details(i))
-        self.host.connection.send(self.host.message_encoder.specified_patch_details(98))
+        for i in range(100):
+            self.host.connection.send(self.host.message_encoder.specified_patch_details(i))
+        #self.host.connection.send(self.host.message_encoder.specified_patch_details(98))
 
     def _add_effect(self, effect):
         pass

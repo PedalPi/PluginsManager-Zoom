@@ -1,4 +1,4 @@
-from decoder.lib.decoder_util import shift_bits
+from decoder.lib.decoder_util import decode_message
 from zoom.model.zoom.zoom_effect import ZoomEffect
 
 
@@ -8,8 +8,20 @@ class ZoomG3v2Patch:
 
     effects = [0]
 
+    # From: decoder/retriever/patch_effects_save_data.py
+    # From: decoder/patch_effects_decode.py
+    # (position, mask, shift)
+    effects_bits = [
+        [(10, 126, -1), (9, 64, 0)],
+        [(23, 126, -1), (17, 2, 5)],
+        [(37, 126, -1), (33, 8, 3)],
+        [(51, 126, -1), (49, 32, 1)],
+        [(64, 126, -1), (57, 1, 6)],
+        [(78, 126, -1), (73, 4, 4)]
+    ]
+
     # From: decoder/retriever/patch_params_save_data.py
-    # From: decoder/patch_params_decoder.py
+    # From: decoder/patch_params_decode.py
     # (position, mask, shift)
     params_bits = [
         [[(11, 126, -1), (9, 32, 1), (12, 31, 7)], [(12, 64, -6), (9, 16, -3), (13, 127, 2), (9, 8, 6)], [(14, 120, -3), (9, 4, 2), (15, 63, 5)], [(16, 127, 0), (9, 1, 7)], [(18, 127, 0), (17, 64, 1)], [(19, 127, 0), (17, 32, 2)], [(20, 127, 0), (17, 16, 3)], [(21, 127, 0), (17, 8, 4)]],
@@ -27,18 +39,15 @@ class ZoomG3v2Patch:
         return (data[position + 4] & 0b00000001) == 0b00000001
 
     @staticmethod
-    def get_effect(builder, data, effect: int) -> ZoomEffect:
-        position = ZoomG3v2Patch.effects_status[effect]
-        index = data[position + 4] >> 1
+    def get_effect(builder, data, id_effect: int) -> ZoomEffect:
+        effect_data = ZoomG3v2Patch.effects_bits[id_effect]
 
-        return builder.build_by_id(index)
+        id = decode_message(data, effect_data)
+
+        return builder.build_by_id(id)
 
     @staticmethod
-    def get_param(data, id_effect, id_param):
-        params_data = ZoomG3v2Patch.params_bits[id_effect][id_param]
+    def get_param(data, id_effect: int, id_param: int):
+        param_data = ZoomG3v2Patch.params_bits[id_effect][id_param]
 
-        value = 0
-        for position, mask, shift in params_data:
-            value |= shift_bits(data[position] & mask, shift)
-
-        return value
+        return decode_message(data, param_data)

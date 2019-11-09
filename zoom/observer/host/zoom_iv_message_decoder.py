@@ -50,15 +50,13 @@ class ZoomIVMessageDecoder:
         pedalboard = ZoomPedalboard(name=name)
 
         for id_effect in range(6):
-            # FIXME: Correct effect
-            effect = ZoomG3v2Patch.get_effect(builder, message.data[6:], id_effect)
+            effect = ZoomG3v2Patch.get_effect(builder, message.data, id_effect)
             effect.active = ZoomG3v2Patch.get_effect_status(message.data[6:], id_effect)
 
             for id_param, param in enumerate(effect.params):
                 param.value = ZoomG3v2Patch.get_param(message.data, id_effect, id_param)
 
             pedalboard.effects.append(effect)
-            print(effect)
 
         # TODO: Pedalboard volume
         # TODO: CTRL SW/PDL

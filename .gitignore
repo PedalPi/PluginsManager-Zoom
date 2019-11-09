@@ -4,3 +4,5 @@ __pycache__
 *.pyc
 PedalController_MidiMultistompController.egg-info
 venv
+.ipynb_checkpoints
+test/

@@ -12,8 +12,10 @@ zoom.connect(ZoomHost())
 # Load all patches from the equipment
 zoom.load_data()
 
+sleep(2)
+
 # Print current patch
-print(zoom.current_pedalboard)
+print('Current pedalboard:', zoom.current_pedalboard)
 
 # Toggle status
 for effect in zoom.current_pedalboard.effects[0]:

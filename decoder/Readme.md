@@ -18,10 +18,10 @@ informs that:
  * the third bit about a param value
  
 The codes legend is:
-* `0`: not mapped information
-* `EpPbB`: B-th byte that corresponds the param value of the P-th param of the E-th effect
-* `AEfOn`: Bit about the A-th effect that informs the current state (on, off)
-* `EtbB`: B-th bit that informs the E-effect
-* `volumeV`: V-th bit of the volume data
-* `nameLbB`: B-th bit of the L-th letter
+* `0`: **unknown** - not mapped information
+* `EpPbB`: **Param value** - B-th byte that corresponds the param value of the P-th param of the E-th effect
+* `AEfOn`: **State** - Bit about the A-th effect that informs the current state (on, off)
+* `EtbB`: **Effect** - B-th bit that informs the E-effect
+* `volumeV`: **Volume** - V-th bit of the volume data
+* `nameLbB`: **Name** - B-th bit of the L-th letter
   
