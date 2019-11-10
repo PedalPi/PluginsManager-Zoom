@@ -11,15 +11,15 @@ Probably PedalPi requirements
       * Effects
       * Params
       * Values
+      * Pedalboard name
+      * Pedalboard volume
    * Send to device:
       * Toggle param status
+      * Pedalboard volume
 
 **To do:**
 
 - Zoom G3
-   * Read more pedalboard data:
-      * Pedalboard name
-      * Pedalboard volume
    * Send to device:
       * Toggle current pedalboard
       * Set a effect param value

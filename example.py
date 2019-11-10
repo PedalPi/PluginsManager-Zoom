@@ -26,6 +26,8 @@ class Observer(UpdatesObserver):
     def on_connection_updated(self, *args, **kwargs):
         print('on_connection_updated', args, kwargs)
 
+    def on_custom_change(self, *args, **kwargs):
+        print('on_custom_change', args, kwargs)
 
 # Instantiate
 zoom = ZoomG3v2()
@@ -41,15 +43,19 @@ sleep(2)
 # Print current patch
 print('Current pedalboard:', zoom.current_pedalboard)
 
-# Toggle status
-for effect in zoom.current_pedalboard.effects:
-    effect.toggle()
-    sleep(1)
+# Set level of current pedalboard
+#zoom.current_pedalboard.level = 25
+sleep(2)
 
 # Toggle status
 for effect in zoom.current_pedalboard.effects:
     effect.toggle()
-    sleep(1)
+    sleep(.5)
+
+# Toggle status
+for effect in zoom.current_pedalboard.effects:
+    effect.toggle()
+    sleep(.5)
 
 # Go to next pedalboard
 zoom.to_next_pedalboard()

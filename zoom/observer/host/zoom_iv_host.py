@@ -1,5 +1,4 @@
 import mido
-from pluginsmanager.banks_manager import BanksManager
 
 from zoom.observer.host.protocol import MidiProtocol
 from zoom.observer.host.zoom_iv_connection import ZoomIVConnection
@@ -32,10 +31,6 @@ class ZoomIVHost:
 
     def close(self):
         self.connection.send(self.message_encoder.disable_editor())
-
-    def zoom_sysex(self, data):
-        head = [self.manufacturing_id, self.device_id, self.model_number]
-        return mido.Message('sysex', data=head + data)
 
     def decode(self, message):
         self.message_decoder.decode(message)

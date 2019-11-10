@@ -82,6 +82,9 @@ class ZoomIVMessageEncoder(object):
     def to_patch(self, number):
         return mido.Message('program_change', channel=0x00, program=number)
 
+    def set_current_pedalboard_level(self, level: int):
+        return self.zoom_sysex([0x31, 0x06, 0x02, level, 0])
+
     #######################
     # Other configurations
     #######################

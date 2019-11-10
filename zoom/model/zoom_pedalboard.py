@@ -1,6 +1,7 @@
 from pluginsmanager.model.pedalboard import Pedalboard
 
 from zoom.exception.exceptions import InvalidLevelException
+from zoom.observer.zoom_change import ZoomChange
 
 
 class ZoomPedalboard(Pedalboard):
@@ -22,7 +23,7 @@ class ZoomPedalboard(Pedalboard):
     @level.setter
     def level(self, new_value):
         if not(0 <= new_value <= 120):
-            msg = 'New value out of range: {} [{} - {}]'.format(
+            msg = 'Pedalboard level: New value out of range: {} [{} - {}]'.format(
                 new_value,
                 0,
                 120
@@ -33,4 +34,20 @@ class ZoomPedalboard(Pedalboard):
             return
 
         self._level = new_value
-        self.observer.on_custom_change(self)
+        self.observer.on_custom_change(ZoomChange.PEDALBOARD_CURRENT_LEVEL, self)
+
+    def __repr__(self):
+        return "<{} {} - '{}' Level {}, at 0x{:x}>".format(
+            self.__class__.__name__,
+            self.zoom_index,
+            self.name,
+            self.level,
+            id(self)
+        )
+
+    @property
+    def zoom_index(self):
+        bank = self.index / 10
+        bank = chr(65 + int(bank))
+        index = self.index % 10
+        return f'{bank}{index}'

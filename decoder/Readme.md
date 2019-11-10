@@ -24,4 +24,3 @@ The codes legend is:
 * `EtbB`: **Effect** - B-th bit that informs the E-effect
 * `volumeV`: **Volume** - V-th bit of the volume data
 * `nameLbB`: **Name** - B-th bit of the L-th letter
-  
