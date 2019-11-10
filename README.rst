@@ -4,30 +4,67 @@ Probably PedalPi requirements
 
    sudo apt-get install portaudio19-dev
 
-**Implemented:**
++-------------------+------------+-------------+-------------+
+|                   | Command                                |
++-------------------+------------+-------------+-------------+
+| Command           | Pedalboard | Read Change | Send Change |
++===================+============+=============+=============+
+| **Pedalboard/Patch data**                                  |
++-------------------+------------+-------------+-------------+
+| Patch Name        | x          |             |             |
++-------------------+------------+-------------+-------------+
+| Patch Level       | x          | x           | x           |
++-------------------+------------+-------------+-------------+
+| Patch Display pos |            | no support  | ?           |
++-------------------+------------+-------------+-------------+
+| Effect            | x          |             | only API    |
++-------------------+------------+-------------+-------------+
+| Effect status     | x          |             | x           |
++-------------------+------------+-------------+-------------+
+| Param value       | x          |             | only API    |
++-------------------+------------+-------------+-------------+
+| CTRL SW/PDL       |            |             |             |
++-------------------+------------+-------------+-------------+
+| PDL DST           |            |             |             |
++-------------------+------------+-------------+-------------+
+| Swap effects      |            |             |             |
++-------------------+------------+-------------+-------------+
+| Set current patch |            |             | only API    |
++-------------------+------------+-------------+-------------+
+| **Tunner**                                                 |
++-------------------+------------+-------------+-------------+
+| Tunner on/off     |            |             | only API    |
++-------------------+------------+-------------+-------------+
+| Tunner+mute on/off|            |             | only API    |
++-------------------+------------+-------------+-------------+
+| **Replace/swap**                                           |
++-------------------+------------+-------------+-------------+
+| Replace patch     |            |             |             |
++-------------------+------------+-------------+-------------+
+| Swap patches      |            |             |             |
++-------------------+------------+-------------+-------------+
+| **Global data**                                            |
++-------------------+------------+-------------+-------------+
+| Global tempo      |            |             | only API    |
++-------------------+------------+-------------+-------------+
+| Global level      |            | no support  | ?           |
++-------------------+------------+-------------+-------------+
+| Global output     |            | no support  | ?           |
++-------------------+------------+-------------+-------------+
+| Signal patch      |            |             |             |
++-------------------+------------+-------------+-------------+
+| Battery           |            | no support  | ?           |
++-------------------+------------+-------------+-------------+
+| LCD               |            | no support  | ?           |
++-------------------+------------+-------------+-------------+
+| Autosave (on off) |            |             |             |
++-------------------+------------+-------------+-------------+
+| USB audio         |            | no support  | ?           |
++-------------------+------------+-------------+-------------+
 
-- Zoom G3
-   * Read effects in the pedalboard:
-      * Effects
-      * Params
-      * Values
-      * Pedalboard name
-      * Pedalboard volume
-   * Send to device:
-      * Toggle param status
-      * Pedalboard volume
+**Legend:**
 
-**To do:**
-
-- Zoom G3
-   * Send to device:
-      * Toggle current pedalboard
-      * Set a effect param value
-      * Set a effect to another (how discover the current value?)
-      * Set the pedalboard volume
-      * Set the pedalboard name
-      * Set the pedalboard name
-      * Toggle pedalboard (replace all the pedalboard!)
-      * Enable tuner without mute
-      * Enable tuner with mute
-      * Disable tuner
+* x: Integrated with PluginsManager API
+* only API: Not yet integrated with PluginsManager API
+* ?: Probably not possible
+* no support: Equipament doesn't informs/receive information about

@@ -54,7 +54,10 @@ class ZoomHost(HostObserver):
                 self.model.current_pedalboard.level = value
 
     def on_custom_change(self, identifier, *args, **kwargs):
-        print("Custom Change!", identifier)
+        print("Custom Change!", identifier, args, kwargs)
+        if identifier == ZoomChange.PEDALBOARD_CURRENT_LEVEL:
+            pedalboard = args[0]
+            self.host.connection.send(self.host.message_encoder.set_current_pedalboard_level(pedalboard.level))
 
     def _add_effect(self, effect):
         pass

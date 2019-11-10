@@ -44,7 +44,7 @@ sleep(2)
 print('Current pedalboard:', zoom.current_pedalboard)
 
 # Set level of current pedalboard
-#zoom.current_pedalboard.level = 25
+zoom.current_pedalboard.level = 25
 sleep(2)
 
 # Toggle status
