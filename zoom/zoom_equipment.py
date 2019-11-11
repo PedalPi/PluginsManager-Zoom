@@ -6,6 +6,7 @@ from pluginsmanager.observer.observable_list import ObservableList
 
 from zoom.exception.exceptions import InvalidPedalboardException
 from zoom.model.zoom_pedalboard import ZoomPedalboard
+from zoom.observer.zoom_change import ZoomChange
 from zoom.observer.zoom_host import ZoomHost
 
 
@@ -73,3 +74,4 @@ class ZoomEquipment(BanksManager):
         self._current_pedalboard_id = pedalboard_index
         # Do not notify change
         self.host._pedalboard = self.pedalboards[self._current_pedalboard_id]
+        self.observer_manager.on_custom_change(ZoomChange.PEDALBOARD_CURRENT, self.current_pedalboard, self._current_pedalboard_id)

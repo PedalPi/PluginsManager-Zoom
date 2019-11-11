@@ -91,4 +91,13 @@ class ZoomIVMessageDecoder:
         if type1 == 0x5A and type2 == 0x31 and type3 == ZoomChange.PEDALBOARD_CURRENT_LEVEL.value and type4 == 0x02:
             return ZoomChange.PEDALBOARD_CURRENT_LEVEL, value1
 
+        # TODO - Decode param
+        '''
+        elif type1 == 0x5A and type2 == 0x31 and (0x00 <= type3 <= 0x05) and (0x02 <= type4 <= 0x09):
+            id_effect = type3
+            id_param = type4
+            value = (value2 << 8) + value1
+            return ZoomChange.PEDALBOARD_CURRENT_LEVEL, [id_effect, id_param, value]
+        '''
+
         return None, None
