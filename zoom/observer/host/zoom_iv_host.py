@@ -11,7 +11,7 @@ class ZoomIVHost:
     Comunicate with Zoom ZFX-IV processor device
     """
 
-    def __init__(self, update_model):
+    def __init__(self, context):
         self.manufacturing_id = 0x52
         self.device_id = 0x00
         self.model_number = 0x5A
@@ -21,7 +21,7 @@ class ZoomIVHost:
         self.connection = ZoomIVConnection(self.name)
         self.connection.callback = lambda message: self.decode(message)
         self.message_encoder = ZoomIVMessageEncoder(self.manufacturing_id, self.device_id, self.model_number)
-        self.message_decoder = ZoomIVMessageDecoder(update_model)
+        self.message_decoder = ZoomIVMessageDecoder(context)
 
     def initialize(self):
         device_info = mido.Message('sysex', data=MidiProtocol.device_identify_request())

@@ -4,6 +4,19 @@ Probably PedalPi requirements
 
    sudo apt-get install portaudio19-dev
 
+
+**Columns:**
+
+* Command: Feature
+* Pedalboard: Information sended by the Zoom G3 equipment
+  in the "pedalboard" message data.
+  These are usually messages about the state of a pedalboard, but it
+  is possible (but not yet verified) that general information about
+  the equipment is also passed, such as battery information, global level,
+  etc ...
+* Read Change: Zoom equipment informs a change applied directly in it
+* Send Change: API informs changes to the Zoom equipment
+
 +-------------------+------------+-------------+-------------+
 |                   | Command                                |
 +-------------------+------------+-------------+-------------+
@@ -11,25 +24,25 @@ Probably PedalPi requirements
 +===================+============+=============+=============+
 | **Pedalboard/Patch data**                                  |
 +-------------------+------------+-------------+-------------+
-| Patch Name        | x          |             |             |
+| Patch Name        | x          | no notify   |             |
 +-------------------+------------+-------------+-------------+
 | Patch Level       | x          | x           | x           |
 +-------------------+------------+-------------+-------------+
-| Patch Display pos |            | no support  | ?           |
+| Patch Display pos | ?          | no support  | ?           |
 +-------------------+------------+-------------+-------------+
-| Effect            | x          |             | only API    |
+| Effect            | x          | x           | x           |
 +-------------------+------------+-------------+-------------+
-| Effect status     | x          |             | x           |
+| Effect status     | x          | x           | x           |
 +-------------------+------------+-------------+-------------+
-| Param value       | x          |             | only API    |
+| Param value       | x          | x           | x           |
 +-------------------+------------+-------------+-------------+
 | CTRL SW/PDL       |            |             |             |
 +-------------------+------------+-------------+-------------+
 | PDL DST           |            |             |             |
 +-------------------+------------+-------------+-------------+
-| Swap effects      |            |             |             |
+| Swap effects      |            |             | ?           |
 +-------------------+------------+-------------+-------------+
-| Get current patch |            | x           | x           |
+| Get current patch | ?          | x           | x           |
 +-------------------+------------+-------------+-------------+
 | Set current patch | x          | x           | x           |
 +-------------------+------------+-------------+-------------+
@@ -41,9 +54,9 @@ Probably PedalPi requirements
 +-------------------+------------+-------------+-------------+
 | **Replace/swap**                                           |
 +-------------------+------------+-------------+-------------+
-| Replace patch     |            |             |             |
+| Replace patch     |            |             | ?           |
 +-------------------+------------+-------------+-------------+
-| Swap patches      |            |             |             |
+| Swap patches      |            |             | ?           |
 +-------------------+------------+-------------+-------------+
 | **Global data**                                            |
 +-------------------+------------+-------------+-------------+
@@ -53,20 +66,35 @@ Probably PedalPi requirements
 +-------------------+------------+-------------+-------------+
 | Global output     |            | no support  | ?           |
 +-------------------+------------+-------------+-------------+
-| Signal patch      |            |             |             |
+| Signal patch      |            |             | ?           |
 +-------------------+------------+-------------+-------------+
 | Battery           |            | no support  | ?           |
 +-------------------+------------+-------------+-------------+
 | LCD               |            | no support  | ?           |
 +-------------------+------------+-------------+-------------+
-| Autosave (on off) |            |             |             |
+| Autosave (on off) |            |             | ?           |
 +-------------------+------------+-------------+-------------+
 | USB audio         |            | no support  | ?           |
++-------------------+------------+-------------+-------------+
+| **Other messages**                                         |
++-------------------+------------+-------------+-------------+
+| Change autosaved               |             | no support  |
++-------------------+------------+-------------+-------------+
+| Manual save msg                |             |             |
 +-------------------+------------+-------------+-------------+
 
 **Legend:**
 
 * x: Integrated with PluginsManager API
+* no notify: The current version doesn't informs patch name changes
 * only API: Not yet integrated with PluginsManager API
-* ?: Probably not possible
-* no support: Equipament doesn't informs/receive information about
+* ?: Unknown. Probably not possible
+* no support: Equipment doesn't informs/receive information about
+
+
+**Other info:**
+
+* Changes applied by the API are not automatically saved to the device.
+* If the autosave option is active on the machine, it eventually saves
+  the latest changes. However, changes made may be lost if the connection
+  to the equipment is terminated before the autosave saves it.

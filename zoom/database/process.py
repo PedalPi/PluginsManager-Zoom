@@ -23,7 +23,14 @@ filename = 'From XML ZoomG3v2.json'
 with open(filename) as data_file:
     data_list = json.load(data_file)
 
-data = {}
+data = {
+    "None": {
+        "name": "None",
+        "category": "None",
+        "parameters": [],
+        "id": 107
+    }
+}
 
 for element in data_list:
     data[element['name']] = element
@@ -35,8 +42,9 @@ for element in data_list:
         del parameter['offset']
         parameter['min'] = 0
         parameter['max'] = int(parameter['max'])
-        parameter['default'] = int(parameter['max'])
+        parameter['default'] = int(parameter['default'])
         parameter['step'] = 1
+
 
 print(json.dumps(data))
 # python process.py >> ZoomG3v2.json

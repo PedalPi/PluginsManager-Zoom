@@ -6,6 +6,9 @@ from zoom.zoom_model import ZoomModel
 
 
 class ZoomBuilder:
+    """
+    Generate the audio plugins based in the equipment
+    """
 
     def __init__(self, model: ZoomModel=ZoomModel.ZoomG3v2):
         folder = os.path.dirname(os.path.realpath(__file__))
