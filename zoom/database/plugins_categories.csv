@@ -1,0 +1,118 @@
+id,name,category
+23,Comp,Dynamics
+24,RackComp,Dynamics
+25,M Comp,Dynamics
+26,SlowATTCK,Dynamics
+27,ZNR,Dynamics
+28,NoiseGate,Dynamics
+29,DirtyGate,Dynamics
+30,GraphicEQ,Filter_EQ
+31,ParaEQ,Filter_EQ
+32,CombFLTR,Filter_EQ
+33,AutoWah,Filter_EQ
+34,Resonance,Filter_EQ
+36,Cry,Filter_EQ
+0,M-Filter,Filter_EQ
+35,Step,Filter_EQ
+12,SeqFLTR,Filter_EQ
+13,RndmFLTR,Filter_EQ
+71,Booster,Stomp Modeling
+72,OverDrive,Stomp Modeling
+73,T Scream,Stomp Modeling
+74,Governor,Stomp Modeling
+75,Dist+,Stomp Modeling
+76,Dist 1,Stomp Modeling
+77,Squeak,Stomp Modeling
+78,FuzzSmile,Stomp Modeling
+79,GreatMuff,Stomp Modeling
+80,MetalWRLD,Stomp Modeling
+81,HotBox,Stomp Modeling
+86,Z Clean,Original Amp
+87,Z MP1,Original Amp
+88,Z Bottom,Original Amp
+89,Z Dream,Original Amp
+90,Z Scream,Original Amp
+91,Z Neos,Original Amp
+82,Z Wild,Original Stomp
+83,Lead,Original Stomp
+84,ExtremeDS,Original Stomp
+85,Aco.Sim,Original Stomp
+92,FD COMBO,Amp Modeling
+111,DELUXE-R,Amp Modeling
+104,FD VIBRO,Amp Modeling
+94,US BLUES,Amp Modeling
+93,VX COMBO,Amp Modeling
+116,VX JMI,Amp Modeling
+95,BG CRUNCH,Amp Modeling
+103,MATCH 30,Amp Modeling
+114,CAR DRIVE,Amp Modeling
+102,TW ROCK,Amp Modeling
+108,TONE CITY,Amp Modeling
+96,HW STACK,Amp Modeling
+97,TANGERINE,Amp Modeling
+109,B-BREAKER,Amp Modeling
+98,MS CRUNCH,Amp Modeling
+115,MS 1959,Amp Modeling
+99,MS DRIVE,Amp Modeling
+110,BGN DRIVE,Amp Modeling
+100,BG DRIVE,Amp Modeling
+101,DZ DRIVE,Amp Modeling
+112,ALIEN,Amp Modeling
+113,REVO-1,Amp Modeling
+38,Tremolo,Modulation
+3,Slicer,Modulation
+39,Phaser,Modulation
+10,DuoPhase,Modulation
+14,WarpPhase,Modulation
+41,Chorus,Modulation
+42,Detune,Modulation
+43,VintageCE,Modulation
+44,StereoCho,Modulation
+45,Ensemble,Modulation
+46,VinFLNGR,Modulation
+106,Flanger,Modulation
+47,DynaFLNGR,Modulation
+48,Vibrato,Modulation
+37,Octave,Modulation
+49,PitchSHFT,Modulation
+51,MonoPitch,Modulation
+52,HPS,Modulation
+50,BendCho,Modulation
+40,RingMod,Modulation
+8,BitCrush,Modulation
+9,Bomber,SFX
+11,MonoSynth,SFX
+2,Z-Organ,SFX
+53,Delay,Delay
+54,TapeEcho,Delay
+55,ModDelay,Delay
+56,AnalogDly,Delay
+57,ReverseDL,Delay
+58,MultiTapD,Delay
+59,DynaDelay,Delay
+5,FilterDly,Delay
+6,PitchDly,Delay
+7,StereoDly,Delay
+4,PhaseDly,Delay
+15,TrgHldDly,Delay
+105,HD Reverb,Reverb
+60,Hall,Reverb
+61,Room,Reverb
+62,TiledRoom,Reverb
+63,Spring,Reverb
+64,Arena,Reverb
+65,EarlyRef,Reverb
+66,Air,Reverb
+22,Comp+OD,Combination Fx
+19,Comp+Phsr,Combination Fx
+20,Comp+AWah,Combination Fx
+16,Cho+Dly,Combination Fx
+18,Dly+Rev,Combination Fx
+17,Cho+Rev,Combination Fx
+21,FLG+VCho,Combination Fx
+67,PedalVx,Pedal Fx
+68,PedalCry,Pedal Fx
+1,TheVibe,Modulation
+69,PDL Pitch,Pedal Fx
+70,PDL MnPit,Pedal Fx
+107,None,None
