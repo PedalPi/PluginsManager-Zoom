@@ -1,21 +1,91 @@
+MidiMultistompController
+========================
+
+..
+  .. image:: https://travis-ci.org/PedalPi/PluginsManager.svg?branch=master
+      :target: https://travis-ci.org/PedalPi/PluginsManager
+      :alt: Build Status
+  .. image:: https://readthedocs.org/projects/pedalpi-pluginsmanager/badge/?version=latest
+      :target: http://pedalpi-pluginsmanager.readthedocs.io/?badge=latest
+      :alt: Documentation Status
+  .. image:: https://codecov.io/gh/PedalPi/PluginsManager/branch/master/graph/badge.svg
+      :target: https://codecov.io/gh/PedalPi/PluginsManager
+      :alt: Code coverage
+
+
+Simplified API for effects unit control.
+
+..
+   **Documentation:**
+      http://pedalpi-pluginsmanager.readthedocs.io/
+
+**Code:**
+   https://github.com/PedalPi/PluginsManager
+
+..
+   **Python Package Index:**
+      https://pypi.org/project/PedalPi-PluginsManager
+
+..
+   **License:**
+      `Apache License 2.0`_
+
+.. _Apache License 2.0: https://github.com/PedalPi/PluginsManager/blob/master/LICENSE
+
+Installation
+------------
+
 Probably PedalPi requirements
 
 .. code::
 
    sudo apt-get install portaudio19-dev
 
+Examples
+--------
+
+Coming soon
+
+Supported Equipment
+-------------------
+
+This library extends `PluginsManager`_ to control third effects unit. Note that for this to be possible,
+the effects unit must be communicable by some protocol (usually MIDI) and someone in the community must
+implement support in this library. These are currently supported devices.
+A detailed list of support for each device is below.
+
+.. _PluginsManager: https://github.com/PedalPi/PluginsManager
+
+* Zoom G3 v2
+* Zoom MS50G (comming soon)
+
+
+Zoom G3
+~~~~~~~
+
+.. code:: python
+
+   # Instantiate
+   zoom = ZoomG3v2()
+   # Connect the object 'zoom' with the real equipment
+   zoom.connect(ZoomHost())
+
+   # Load all patches from the equipment
+   zoom.load_data()
+
+
 
 **Columns:**
 
-* Command: Feature
-* Pedalboard: Information sended by the Zoom G3 equipment
+* :code:`Command`: Feature
+* :code:`Pedalboard`: Information sended by the Zoom G3 equipment
   in the "pedalboard" message data.
   These are usually messages about the state of a pedalboard, but it
   is possible (but not yet verified) that general information about
   the equipment is also passed, such as battery information, global level,
   etc ...
-* Read Change: Zoom equipment informs a change applied directly in it
-* Send Change: API informs changes to the Zoom equipment
+* :code:`Read Change`: Zoom equipment informs a change applied directly in it
+* :code:`Send Change`: API informs changes to the Zoom equipment
 
 +-------------------+------------+-------------+-------------+
 |                   | Command                                |
@@ -46,9 +116,9 @@ Probably PedalPi requirements
 +-------------------+------------+-------------+-------------+
 | **Tunner**                                                 |
 +-------------------+------------+-------------+-------------+
-| Tunner on/off     |            | no support? | only API    |
+| Tunner on/off     |            | no support  | only API    |
 +-------------------+------------+-------------+-------------+
-| Tunner+mute on/off|            |             | only API    |
+| Tunner+mute on/off|            | no support  | only API    |
 +-------------------+------------+-------------+-------------+
 | **Replace/swap**                                           |
 +-------------------+------------+-------------+-------------+
@@ -85,11 +155,11 @@ Probably PedalPi requirements
 
 **Legend:**
 
-* x: Integrated with PluginsManager API
-* no notify: The current version doesn't informs patch name changes
-* only API: Not yet integrated with PluginsManager API
-* ?: Unknown. Probably not possible
-* no support: Equipment doesn't informs/receive information about
+* :code:`Blank cells`: Not implemented. It may be supported.
+* :code:`x`: Integrated with PluginsManager API
+* :code:`only API`: Not yet integrated with PluginsManager API
+* :code:`?`: Unknown. Probably not possible
+* :code:`no support`: Equipment doesn't informs/receive information about
 
 
 **Other info:**
@@ -98,3 +168,11 @@ Probably PedalPi requirements
 * If the autosave option is active on the machine, it eventually saves
   the latest changes. However, changes made may be lost if the connection
   to the equipment is terminated before the autosave saves it.
+
+
+Zoom MS50g
+~~~~~~~~~~
+
+.. code:: python
+
+   # TODO

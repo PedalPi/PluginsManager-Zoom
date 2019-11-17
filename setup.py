@@ -31,9 +31,9 @@ setup(
 
     url='https://github.com/PedalController/MidiMultistompController',
 
-    author='Paulo Mateus Moura da Silva (SrMouraSilva)',
+    author='Paulo Mateus (SrMouraSilva)',
     author_email='mateus.moura@hotmail.com',
-    maintainer='Paulo Mateus Moura da Silva (SrMouraSilva)',
+    maintainer='Paulo Mateus (SrMouraSilva)',
     maintainer_email='mateus.moura@hotmail.com',
 
     license="Apache Software License v2",
@@ -60,9 +60,10 @@ setup(
         'Intended Audience :: Developers',
         'License :: OSI Approved :: Apache Software License',
         'Topic :: Multimedia :: Sound/Audio',
-        'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6'
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
     ],
     keywords='zoom multistomp midi',
 
