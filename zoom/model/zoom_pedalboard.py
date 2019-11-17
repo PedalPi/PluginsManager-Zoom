@@ -4,10 +4,25 @@ from zoom.exception.exceptions import InvalidLevelException
 from zoom.observer.zoom_change import ZoomChange
 
 
+class ZoomPedalboardError(Exception):
+    pass
+
+
 class ZoomPedalboard(Pedalboard):
     def __init__(self, name):
         super().__init__(name)
         self._level = 0
+
+    @property
+    def name(self):
+        return super(ZoomPedalboard, self.__class__).name.__get__(self)
+
+    @name.setter
+    def name(self, new_value):
+        if len(new_value) != 10:
+            raise ZoomPedalboard("Name must be 10 characters!")
+
+        super(ZoomPedalboard, self.__class__).name.__set__(self, new_value)
 
     @property
     def level(self):

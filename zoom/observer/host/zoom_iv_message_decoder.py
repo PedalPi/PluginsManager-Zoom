@@ -149,6 +149,16 @@ class ZoomIVMessageDecoder:
             with self._context as model:
                 model.current_pedalboard.level = value1
 
+        # Pedalboard name
+        elif type2 == 0x31 and type3 == ZoomChange.PEDALBOARD_NAME.value and (0x00 <= type4 <= 0x09):
+            with self._context as model:
+                pos = type4
+                new_letter = bytes([value1]).decode()
+                name = model.current_pedalboard.name
+                new_name = name[:pos] + new_letter + name[pos+1:]
+
+                model.current_pedalboard.name = new_name
+
         # Param value
         elif type2 == 0x31 and (0x00 <= type3 <= 0x05):
             id_effect = type3
