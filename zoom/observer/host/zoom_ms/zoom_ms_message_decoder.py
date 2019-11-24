@@ -3,12 +3,12 @@ from typing import Tuple
 from zoom.model.zoom.zoom_effect import ZoomEffect
 from zoom.model.zoom_pedalboard import ZoomPedalboard
 from zoom.observer.host.protocol import MidiProtocol
-from zoom.observer.host.zoomg3v2_patch import ZoomG3v2Patch
+from zoom.observer.host.zoom_iv.zoomg3v2_patch import ZoomG3v2Patch
 from zoom.observer.zoom_change import ZoomChange
-from zoom.zoom_builder import ZoomBuilder
+from zoom.zoom_builder import ZoomEffectsBuilder
 
 
-class ZoomIVMessageDecoder:
+class ZoomMSMessageDecoder:
 
     def __init__(self, context):
         self._context = context
@@ -16,6 +16,7 @@ class ZoomIVMessageDecoder:
     def decode(self, message):
         print(len(message), message)
 
+        '''
         if message.type == 'program_change':
             with self._context as model:
                 model.to_pedalboard(+message.program)
@@ -67,7 +68,6 @@ class ZoomIVMessageDecoder:
 
         name = bytes(data[0x65:0x69] + data[0x6A:0x70]).decode()
 
-        # TODO Notify name
         pedalboard.name = name
 
         new_pedalboard = len(pedalboard.effects) == 0
@@ -175,3 +175,4 @@ class ZoomIVMessageDecoder:
                     model.current_pedalboard.effects[id_effect].params[id_param].value = value
 
         print(hex(type1), hex(type2), hex(type3), hex(type4))
+    '''

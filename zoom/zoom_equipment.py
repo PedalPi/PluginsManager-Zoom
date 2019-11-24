@@ -1,18 +1,12 @@
-from enum import Enum
-
 from pluginsmanager.banks_manager import BanksManager
 from pluginsmanager.model.bank import Bank
 from pluginsmanager.observer.observable_list import ObservableList
 
 from zoom.exception.exceptions import InvalidPedalboardException
 from zoom.model.zoom_pedalboard import ZoomPedalboard
+from zoom.observer.host.zoom_equipment_host import ZoomEquipmentHost
 from zoom.observer.zoom_change import ZoomChange
 from zoom.observer.zoom_host import ZoomHost
-
-
-class ZoomSignal(Enum):
-    LEFT_TO_RIGHT = 0
-    RIGHT_TO_LEFT = 1
 
 
 class ZoomEquipment(BanksManager):
@@ -25,16 +19,15 @@ class ZoomEquipment(BanksManager):
         self._max_pedalboards = 100
         self._tempo = 120
         self._autosave = False
-        self._signal_flow = ZoomSignal.RIGHT_TO_LEFT
 
         self._current_pedalboard_id = 0
 
         self.append(Bank("Default Patches"))
 
-    def connect(self, host: ZoomHost):
-        self.host = host
-        self.register(host)
-        host.connect(self)
+    def _connect(self, equipment_host: ZoomEquipmentHost):
+        self.host = ZoomHost(equipment_host)
+        self.register(self.host)
+        self.host.connect(self)
 
     def load_data(self):
         self.host.load_data()

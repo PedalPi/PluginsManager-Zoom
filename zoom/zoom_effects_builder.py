@@ -5,7 +5,7 @@ from zoom.model.zoom.zoom_effect import ZoomEffect
 from zoom.zoom_model import ZoomModel
 
 
-class ZoomBuilder:
+class ZoomEffectsBuilder:
     """
     Generate the audio plugins based in the equipment
     """

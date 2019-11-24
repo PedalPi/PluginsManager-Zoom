@@ -5,18 +5,9 @@ from zoom.observer.zoom_host import ZoomHost
 from zoom.zoom_equipment import ZoomEquipment
 
 
-class ZoomSignal(Enum):
-    LEFT_TO_RIGHT = 0
-    RIGHT_TO_LEFT = 1
-
-
-class ZoomG3v2(ZoomEquipment):
-
-    def __init__(self):
-        super().__init__()
-        self._signal_flow = ZoomSignal.RIGHT_TO_LEFT
+class ZoomMS50gv3(ZoomEquipment):
 
     def connect(self):
-        self.host = ZoomHost(ZoomIVHost)
+        self.host = ZoomHost(ZoomMSHost)
         self.register(self.host)
         self.host.connect(self)

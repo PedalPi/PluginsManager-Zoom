@@ -68,10 +68,13 @@ Zoom G3
    # Instantiate
    zoom = ZoomG3v2()
    # Connect the object 'zoom' with the real equipment
-   zoom.connect(ZoomHost())
+   zoom.connect()
 
    # Load all patches from the equipment
    zoom.load_data()
+
+   # Disconnect the equipment
+   zoom.disconnect()
 
 
 
@@ -175,4 +178,14 @@ Zoom MS50g
 
 .. code:: python
 
-   # TODO
+   # Instantiate
+   zoom = ZoomMS50gv3()
+   # Connect the object 'zoom' with the real equipment
+   zoom.connect()
+
+   # Load all patches from the equipment
+   zoom.load_data()
+
+   # Disconnect the equipment
+   zoom.disconnect()
+

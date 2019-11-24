@@ -4,7 +4,8 @@ from pluginsmanager.model.effect import Effect
 from pluginsmanager.observer.host_observer.host_observer import HostObserver
 from pluginsmanager.observer.update_type import UpdateType
 
-from zoom.observer.host.zoom_iv_host import ZoomIVHost
+from zoom.observer.host.zoom_equipment_host import ZoomEquipmentHost
+from zoom.observer.host.zoom_iv.zoom_iv_host import ZoomIVHost
 from zoom.observer.zoom_change import ZoomChange
 
 
@@ -13,10 +14,10 @@ class ZoomHost(HostObserver):
     For security, changes will be applied over the current pedalboard
     """
 
-    def __init__(self):
+    def __init__(self, equipment_host: ZoomEquipmentHost):
         super().__init__()
         context = ZoomHostContext(self)
-        self.host = ZoomIVHost(context)
+        self.host = ZoomIVHost(context, equipment_host)
         self.model: 'ZoomEquipment' = None
 
     def start(self):

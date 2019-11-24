@@ -1,7 +1,7 @@
 import mido
 
 
-class ZoomIVConnection(object):
+class ZoomConnection(object):
     def __init__(self, port_name):
         self.name = port_name
         self.midiout = mido.open_output(self.name)
