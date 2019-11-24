@@ -14,6 +14,8 @@ class ZoomG3v2(ZoomEquipment):
 
     def __init__(self):
         super().__init__()
+        self._total_pedalboards = 100
+
         self._signal_flow = ZoomSignal.RIGHT_TO_LEFT
 
     def connect(self):

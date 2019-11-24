@@ -19,4 +19,3 @@ class ZoomIVHost(ZoomEquipmentHostData):
 
         self.encoder_class = ZoomIVMessageEncoder
         self.decoder_class = ZoomIVMessageDecoder
-

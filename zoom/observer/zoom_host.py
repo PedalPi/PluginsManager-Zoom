@@ -1,11 +1,11 @@
 from time import sleep
+from typing import Type
 
 from pluginsmanager.model.effect import Effect
 from pluginsmanager.observer.host_observer.host_observer import HostObserver
 from pluginsmanager.observer.update_type import UpdateType
 
-from zoom.observer.host.zoom_equipment_host import ZoomEquipmentHost
-from zoom.observer.host.zoom_iv.zoom_iv_host import ZoomIVHost
+from zoom.observer.host.zoom_equipment_host import ZoomEquipmentHost, ZoomEquipmentHostData
 from zoom.observer.zoom_change import ZoomChange
 
 
@@ -14,10 +14,10 @@ class ZoomHost(HostObserver):
     For security, changes will be applied over the current pedalboard
     """
 
-    def __init__(self, equipment_host: ZoomEquipmentHost):
+    def __init__(self, equipment_host: Type[ZoomEquipmentHostData]):
         super().__init__()
         context = ZoomHostContext(self)
-        self.host = ZoomIVHost(context, equipment_host)
+        self.host = ZoomEquipmentHost(context, equipment_host)
         self.model: 'ZoomEquipment' = None
 
     def start(self):
@@ -41,7 +41,7 @@ class ZoomHost(HostObserver):
         self.host.close()
 
     def load_data(self):
-        for i in range(100):
+        for i in range(self.model.max_pedalboards):
             sleep(0.04)
             self.host.connection.send(self.host.message_encoder.specified_patch_details(i))
 

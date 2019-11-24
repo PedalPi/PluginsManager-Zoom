@@ -7,5 +7,6 @@ class Manufacturer(Enum):
 
 class ZoomModel(Enum):
     ZoomG3v2 = 0x5A
-    ZoomMS50gv3 = 0x58
-
+    ZoomMS50g = 0x58
+    ZoomMS60b = 0x5F
+    ZoomMS7cdr = 0x61
