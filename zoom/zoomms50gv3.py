@@ -10,6 +10,6 @@ class ZoomMS50gv3(ZoomEquipment):
         self._total_pedalboards = 50
 
     def connect(self):
-        self.host = ZoomHost(ZoomMSHost)
+        self.host = ZoomHost(ZoomMSHost())
         self.register(self.host)
         self.host.connect(self)

@@ -1,5 +1,7 @@
 import mido
 
+from zoom.zoom_model import Manufacturer, ZoomModel
+
 
 class ZoomMSMessageEncoder(object):
     """
@@ -9,13 +11,13 @@ class ZoomMSMessageEncoder(object):
      - https://github.com/g200kg/zoom-ms-utility/blob/master/midimessage.md
     """
 
-    def __init__(self, manufacturing_id, device_id, model_number):
+    def __init__(self, manufacturing_id: Manufacturer, device_id: int, model_number: ZoomModel):
         self.manufacturing_id = manufacturing_id
         self.device_id = device_id
         self.model_number = model_number
 
     def zoom_sysex(self, data):
-        head = [self.manufacturing_id, self.device_id, self.model_number]
+        head = [self.manufacturing_id.value, self.device_id, self.model_number.value]
         return mido.Message('sysex', data=head + data)
 
     #######################

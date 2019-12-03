@@ -145,7 +145,7 @@ Zoom G3
 +-------------------+------------+-------------+-------------+
 | Autosave (on off) |            |             | ?           |
 +-------------------+------------+-------------+-------------+
-| USB audio         |            | no support  | ?           |
+| USB audio volume  |            | no support  | ?           |
 +-------------------+------------+-------------+-------------+
 | **Other messages**                                         |
 +-------------------+------------+-------------+-------------+
@@ -189,3 +189,91 @@ Zoom MS50g
    # Disconnect the equipment
    zoom.disconnect()
 
+
+
+**Columns:**
+
+* :code:`Command`: Feature
+* :code:`Pedalboard`: Information sended by the Zoom G3 equipment
+  in the "pedalboard" message data.
+  These are usually messages about the state of a pedalboard, but it
+  is possible (but not yet verified) that general information about
+  the equipment is also passed, such as battery information, global level,
+  etc ...
+* :code:`Read Change`: Zoom equipment informs a change applied directly in it
+* :code:`Send Change`: API informs changes to the Zoom equipment
+
++-------------------+------------+-------------+-------------+
+|                   | Command                                |
++-------------------+------------+-------------+-------------+
+| Command           | Pedalboard | Read Change | Send Change |
++===================+============+=============+=============+
+| **Pedalboard/Patch data**                                  |
++-------------------+------------+-------------+-------------+
+| Patch Name        | x          | no support  |             |
++-------------------+------------+-------------+-------------+
+| Patch Level       | no support                             |
++-------------------+------------+-------------+-------------+
+| Patch Display pos |            | no support  |             |
++-------------------+------------+-------------+-------------+
+| Effect            |            |             |             |
++-------------------+------------+-------------+-------------+
+| Effect status     |            |             |             |
++-------------------+------------+-------------+-------------+
+| Param value       |            |             |             |
++-------------------+------------+-------------+-------------+
+| CTRL SW/PDL       |            |             |             |
++-------------------+------------+-------------+-------------+
+| PDL DST           |            |             |             |
++-------------------+------------+-------------+-------------+
+| Swap effects      |            |             |             |
++-------------------+------------+-------------+-------------+
+| Set current patch |            |             |             |
++-------------------+------------+-------------+-------------+
+| **Tunner**                                                 |
++-------------------+------------+-------------+-------------+
+| Tunner on/off     |            |             |             |
++-------------------+------------+-------------+-------------+
+| Tunner+mute on/off|            |             |             |
++-------------------+------------+-------------+-------------+
+| **Replace/swap**                                           |
++-------------------+------------+-------------+-------------+
+| Replace patch     |            |             |             |
++-------------------+------------+-------------+-------------+
+| Swap patches      |            |             |             |
++-------------------+------------+-------------+-------------+
+| **Global data**                                            |
++-------------------+------------+-------------+-------------+
+| Global tempo      |            | conflictTAP |             |
++-------------------+------------+-------------+-------------+
+| Global level      | no support                             |
++-------------------+------------+-------------+-------------+
+| Global output     | no support                             |
++-------------------+------------+-------------+-------------+
+| Signal patch      | no support                             |
++-------------------+------------+-------------+-------------+
+| Battery           |            | no support  |             |
++-------------------+------------+-------------+-------------+
+| LCD               |            | no support  |             |
++-------------------+------------+-------------+-------------+
+| Autosave (on off) |            | no support  |             |
++-------------------+------------+-------------+-------------+
+| USB audio volume  | no support                             |
++-------------------+------------+-------------+-------------+
+| **Other messages**                                         |
++-------------------+------------+-------------+-------------+
+| Get current patch              | no support  |             |
++-------------------+------------+-------------+-------------+
+| Change autosaved               |             |             |
++-------------------+------------+-------------+-------------+
+| Manual save msg                |             |             |
++-------------------+------------+-------------+-------------+
+
+**Legend:**
+
+* :code:`conflictTAP`: Same message to the 4º effect 7º param value
+* :code:`Blank cells`: Not implemented. It may be supported.
+* :code:`x`: Integrated with PluginsManager API
+* :code:`only API`: Not yet integrated with PluginsManager API
+* :code:`?`: Unknown. Probably not possible
+* :code:`no support`: Equipment doesn't informs/receive information about

@@ -19,6 +19,6 @@ class ZoomG3v2(ZoomEquipment):
         self._signal_flow = ZoomSignal.RIGHT_TO_LEFT
 
     def connect(self):
-        self.host = ZoomHost(ZoomIVHost)
+        self.host = ZoomHost(ZoomIVHost())
         self.register(self.host)
         self.host.connect(self)

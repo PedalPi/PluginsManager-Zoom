@@ -4,6 +4,9 @@ from itertools import count
 def decode_message(data, bits_location):
     value = 0
     for position, mask, shift in bits_location:
+        if shift == 'NZ':
+            continue
+
         value |= shift_bits(data[position] & mask, shift)
 
     return value

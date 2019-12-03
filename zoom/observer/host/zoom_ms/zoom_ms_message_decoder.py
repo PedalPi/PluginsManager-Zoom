@@ -4,7 +4,9 @@ from zoom.model.zoom.zoom_effect import ZoomEffect
 from zoom.model.zoom_pedalboard import ZoomPedalboard
 from zoom.observer.host.protocol import MidiProtocol
 from zoom.observer.host.zoom_iv.zoomg3v2_patch import ZoomG3v2Patch
+from zoom.observer.host.zoom_ms.zoom_ms_patch import ZoomMSPatch
 from zoom.observer.zoom_change import ZoomChange
+from zoom.zoom_model import ZoomModel
 
 
 class ZoomMSMessageDecoder:
@@ -15,26 +17,23 @@ class ZoomMSMessageDecoder:
     def decode(self, message):
         print(len(message), message)
 
-        '''
-        if message.type == 'program_change':
-            with self._context as model:
-                model.to_pedalboard(+message.program)
+        if len(message) == 15:
+            print('Device info', message.hex())
+            print(MidiProtocol.device_identity_reply_decode(message.data))
 
         elif len(message) == 10:
             self.decode_small_data(message)
 
-        elif len(message) == 15:
-            print('Device info', message.hex())
-            print(MidiProtocol.device_identity_reply_decode(message.data))
-
         # Update current pedalboard
-        elif len(message) == 110:
+        elif len(message) == 146:
             data = message.data[0:5] + (0,) * 5 + message.data[5:]
 
             # TODO: Update current pedalboard instead replace it all
             with self._context as model:
-                current_pedalboard = model.current_pedalboard
-                pedalboard = self.decode_specific_pedalboard(data, current_pedalboard)
+                self.decode_specific_pedalboard(message.data, ZoomPedalboard(""))
+
+                #current_pedalboard = model.current_pedalboard
+                #pedalboard = self.decode_specific_pedalboard(data, current_pedalboard)
 
                 #index = model.current_pedalboard.index
                 #old_pedalboard = model.pedalboards[index]
@@ -43,10 +42,10 @@ class ZoomMSMessageDecoder:
             #print(pedalboard)
             #print(pedalboard.effects)
 
-        elif len(message) == 120:
-            pedalboard = self.decode_specific_pedalboard(message.data, ZoomPedalboard(""))
-            with self._context as model:
-                model.pedalboards.append(pedalboard)
+        #elif len(message) == 120:
+        #    pedalboard = self.decode_specific_pedalboard(message.data, ZoomPedalboard(""))
+        #    with self._context as model:
+        #        model.pedalboards.append(pedalboard)
 
         else:
             # Path saved in x position
@@ -57,28 +56,30 @@ class ZoomMSMessageDecoder:
             print('Size', len(message))
 
     def decode_specific_pedalboard(self, data, pedalboard: ZoomPedalboard):
-        builder = ZoomBuilder(None)
+        builder = None#ZoomBuilder(None)
 
         manufacturing_id = data[0]
         device_id = data[1]
         model_number = data[2]
 
-        command_number = data[3]  # 08
+        command_number = data[3]
 
-        name = bytes(data[0x65:0x69] + data[0x6A:0x70]).decode()
+        name = bytes((data[0x83], ) + data[0x85:0x8c] + data[0x8d:0x8f]).decode()
 
         pedalboard.name = name
 
         new_pedalboard = len(pedalboard.effects) == 0
 
         for id_effect in range(6):
-            effect, effect_replaced = self._get_effect(builder, data, pedalboard, new_pedalboard, id_effect)
+            effect, effect_replaced = self._get_effect(data, pedalboard, new_pedalboard, id_effect)
 
-            effect.active = ZoomG3v2Patch.get_effect_status(data[6:], id_effect)
+            effect.active = ZoomMSPatch.get_effect_status(data[6:], id_effect)
 
             for id_param, param in enumerate(effect.params):
-                param.value = ZoomG3v2Patch.get_param(data, id_effect, id_param)
+                param.value = ZoomMSPatch.get_param(data, id_effect, id_param)
 
+            print(effect)
+            '''
             if new_pedalboard:
                 pedalboard.effects.append(effect)
             elif effect_replaced:
@@ -94,8 +95,9 @@ class ZoomMSMessageDecoder:
         # TODO: PDL DST
 
         return pedalboard
+        '''
 
-    def _get_effect(self, builder, data, pedalboard, new_pedalboard, id_effect) -> Tuple[ZoomEffect, bool]:
+    def _get_effect(self, data, pedalboard, new_pedalboard, id_effect) -> Tuple[ZoomEffect, bool]:
         """
         If the pedalboard is a new pedalboard, it will be generates a new effect.
         This case is applied when there are loading the data of the equipment
@@ -113,7 +115,7 @@ class ZoomMSMessageDecoder:
             Effect (created or updated),
             the effect has been replaced? (boolean)
         """
-        effect_generated = ZoomG3v2Patch.get_effect(builder, data, id_effect)
+        effect_generated = ZoomMSPatch.get_effect(data, id_effect)
 
         if new_pedalboard:
             return effect_generated, new_pedalboard
@@ -126,13 +128,6 @@ class ZoomMSMessageDecoder:
             return effect_generated, True
 
     def decode_small_data(self, message):
-        # Commands (F0 52 00 5A xx)
-        # 08: Specific path
-        # 28: Current path / Foot switch expression
-        # 31: Global info: Tempo / Signal path / Auto save / Foot switch (min, max)
-        # 31: Patch info: Patch name / Patch volume / Ctrl switch assignment
-        # 31: Effect param value:
-        # 32: Patch saved
         type1 = message.data[0x02]
         type2 = message.data[0x03]
         type3 = message.data[0x04]
@@ -140,38 +135,22 @@ class ZoomMSMessageDecoder:
         value1 = message.data[0x06]
         value2 = message.data[0x07]
 
-        if type1 != 0x5A:
+        if type1 != ZoomModel.ZoomMS50g.value:
             return
 
-        # Pedalboard level
-        if type2 == 0x31 and type3 == ZoomChange.PEDALBOARD_CURRENT_LEVEL.value and type4 == 0x02:
-            with self._context as model:
-                model.current_pedalboard.level = value1
-
-        # Pedalboard name
-        elif type2 == 0x31 and type3 == ZoomChange.PEDALBOARD_NAME.value and (0x00 <= type4 <= 0x09):
-            with self._context as model:
-                pos = type4
-                new_letter = bytes([value1]).decode()
-                name = model.current_pedalboard.name
-                new_name = name[:pos] + new_letter + name[pos+1:]
-
-                model.current_pedalboard.name = new_name
-
         # Param value
-        elif type2 == 0x31 and (0x00 <= type3 <= 0x05):
+        if type2 == 0x31 and (0x00 <= type3 <= 0x05):
             id_effect = type3
 
             if 0x00 == type4:
                 with self._context as model:
-                     model.current_pedalboard.effects[id_effect].active = False
+                     print('effect', id_effect, 'active', False)
+                     #model.current_pedalboard.effects[id_effect].active = False
 
-            elif 0x02 <= type4 <= 0x09:
+            elif 0x02 <= type4 <= 0x10:
                 id_param = type4 - 2
                 value = (value2 << 7) + value1
 
                 with self._context as model:
-                    model.current_pedalboard.effects[id_effect].params[id_param].value = value
-
-        print(hex(type1), hex(type2), hex(type3), hex(type4))
-    '''
+                    print('effect', id_effect, 'param', id_param, 'value', value)
+                    #model.current_pedalboard.effects[id_effect].params[id_param].value = value

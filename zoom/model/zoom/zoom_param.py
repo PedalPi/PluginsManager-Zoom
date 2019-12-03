@@ -28,6 +28,7 @@ class ZoomParam(Param):
     def __init__(self, effect, data):
         super().__init__(effect, data['default'])
         self._data = data
+        self._labels = self.data['labels'] if 'labels' in self.data else range(self.minimum, self.maximum+1)
 
     @property
     def data(self):
@@ -39,11 +40,19 @@ class ZoomParam(Param):
 
     @property
     def minimum(self):
-        return self.data['min']
+        return 0 if 'min' not in self.data else self.data['min']
 
     @property
     def symbol(self):
         return self.data['name']
 
+    @property
+    def label(self):
+        return self.labels[self.value]
+
+    @property
+    def labels(self):
+        return self._labels
+
     def __str__(self):
-        return f"{self.symbol}: {self.value} [{self.minimum},{self.maximum}]"
+        return f"{self.symbol}: {self.label} [{self.labels[self.minimum]}, {self.labels[self.maximum]}]"

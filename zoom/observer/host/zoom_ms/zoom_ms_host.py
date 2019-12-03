@@ -13,7 +13,7 @@ class ZoomMSHost(ZoomEquipmentHostData):
         super().__init__()
         self.manufacturing_id = Manufacturer.Zoom
         self.device_id = 0x00
-        self.model_number = ZoomModel.ZoomMS50gv3
+        self.model_number = ZoomModel.ZoomMS50g
 
         self.name = 'ZOOM MS Series MIDI 1'
 

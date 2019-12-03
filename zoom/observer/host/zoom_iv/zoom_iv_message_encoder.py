@@ -18,7 +18,7 @@ class ZoomIVMessageEncoder(object):
         self.model_number = model_number
 
     def zoom_sysex(self, data):
-        head = [self.manufacturing_id, self.device_id, self.model_number]
+        head = [self.manufacturing_id.value, self.device_id, self.model_number.value]
         return mido.Message('sysex', data=head + data)
 
     #######################

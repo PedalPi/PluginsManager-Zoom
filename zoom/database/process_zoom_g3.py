@@ -47,4 +47,4 @@ for element in data_list:
 
 
 print(json.dumps(data))
-# python process.py >> ZoomG3v2.json
+# python process_zoom_g3.py >> ZoomG3v2.json

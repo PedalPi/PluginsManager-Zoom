@@ -23,7 +23,7 @@ class ZoomEquipmentHost:
         self.host_data = host_data
 
         MessageEncoder = self.host_data.encoder_class
-        MessageDecoder = self.host_data.encoder_class
+        MessageDecoder = self.host_data.decoder_class
 
         self.connection = ZoomConnection(self.host_data.name)
         self.connection.callback = lambda message: self.decode(message)

@@ -1,5 +1,4 @@
 from time import sleep
-from typing import Type
 
 from pluginsmanager.model.effect import Effect
 from pluginsmanager.observer.host_observer.host_observer import HostObserver
@@ -14,7 +13,7 @@ class ZoomHost(HostObserver):
     For security, changes will be applied over the current pedalboard
     """
 
-    def __init__(self, equipment_host: Type[ZoomEquipmentHostData]):
+    def __init__(self, equipment_host: ZoomEquipmentHostData):
         super().__init__()
         context = ZoomHostContext(self)
         self.host = ZoomEquipmentHost(context, equipment_host)

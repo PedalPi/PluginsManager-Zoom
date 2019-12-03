@@ -5,7 +5,9 @@ from zoom.model.zoom_pedalboard import ZoomPedalboard
 from zoom.observer.host.protocol import MidiProtocol
 from zoom.observer.host.zoom_iv.zoomg3v2_patch import ZoomG3v2Patch
 from zoom.observer.zoom_change import ZoomChange
-from zoom.zoom_builder import ZoomEffectsBuilder
+from zoom.zoom_effects_builder import ZoomEffectsBuilder
+
+from zoom.zoom_model import ZoomModel
 
 
 class ZoomIVMessageDecoder:
@@ -140,7 +142,7 @@ class ZoomIVMessageDecoder:
         value1 = message.data[0x06]
         value2 = message.data[0x07]
 
-        if type1 != 0x5A:
+        if type1 != ZoomModel.ZoomG3v2.value:
             return
 
         # Pedalboard level
