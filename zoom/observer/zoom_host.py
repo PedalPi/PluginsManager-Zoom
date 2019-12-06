@@ -40,7 +40,7 @@ class ZoomHost(HostObserver):
         self.host.close()
 
     def load_data(self):
-        for i in range(self.model.max_pedalboards):
+        for i in range(self.model.total_pedalboards):
             sleep(0.04)
             self.host.connection.send(self.host.message_encoder.specified_patch_details(i))
 

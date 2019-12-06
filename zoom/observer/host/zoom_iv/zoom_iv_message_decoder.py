@@ -36,14 +36,7 @@ class ZoomIVMessageDecoder:
             # TODO: Update current pedalboard instead replace it all
             with self._context as model:
                 current_pedalboard = model.current_pedalboard
-                pedalboard = self.decode_specific_pedalboard(data, current_pedalboard)
-
-                #index = model.current_pedalboard.index
-                #old_pedalboard = model.pedalboards[index]
-                #model.pedalboards[index] = pedalboard
-
-            #print(pedalboard)
-            #print(pedalboard.effects)
+                self.decode_specific_pedalboard(data, current_pedalboard)
 
         elif len(message) == 120:
             pedalboard = self.decode_specific_pedalboard(message.data, ZoomPedalboard(""))
@@ -59,7 +52,7 @@ class ZoomIVMessageDecoder:
             print('Size', len(message))
 
     def decode_specific_pedalboard(self, data, pedalboard: ZoomPedalboard):
-        builder = ZoomEffectsBuilder(None)
+        builder = ZoomEffectsBuilder(ZoomModel.ZoomG3v2)
 
         manufacturing_id = data[0]
         device_id = data[1]

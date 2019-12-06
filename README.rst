@@ -216,31 +216,31 @@ Zoom MS50g
 +-------------------+------------+-------------+-------------+
 | Patch Display pos |            | no support  |             |
 +-------------------+------------+-------------+-------------+
-| Effect            |            |             |             |
+| Effect            | x          |             |             |
 +-------------------+------------+-------------+-------------+
-| Effect status     |            |             |             |
+| Effect status     | x          |             | only API:0-2|
 +-------------------+------------+-------------+-------------+
-| Param value       |            |             |             |
+| Param value       | x          |             | only API:0-2|
 +-------------------+------------+-------------+-------------+
-| CTRL SW/PDL       |            |             |             |
+| CTRL SW/PDL       | no support                             |
 +-------------------+------------+-------------+-------------+
-| PDL DST           |            |             |             |
+| PDL DST           | no support                             |
 +-------------------+------------+-------------+-------------+
-| Swap effects      |            |             |             |
+| Swap effects                   |             |             |
 +-------------------+------------+-------------+-------------+
-| Set current patch |            |             |             |
+| Set current patch | no support |             | only API    |
 +-------------------+------------+-------------+-------------+
 | **Tunner**                                                 |
 +-------------------+------------+-------------+-------------+
-| Tunner on/off     |            |             |             |
+| Tunner on/off     | ?          | no support  |             |
 +-------------------+------------+-------------+-------------+
-| Tunner+mute on/off|            |             |             |
+| Tunner+mute on/off| ?          | no support  |             |
 +-------------------+------------+-------------+-------------+
 | **Replace/swap**                                           |
 +-------------------+------------+-------------+-------------+
-| Replace patch     |            |             |             |
+| Replace patch                  | no support  |             |
 +-------------------+------------+-------------+-------------+
-| Swap patches      |            |             |             |
+| Swap patches                   | no support  |             |
 +-------------------+------------+-------------+-------------+
 | **Global data**                                            |
 +-------------------+------------+-------------+-------------+
@@ -264,7 +264,7 @@ Zoom MS50g
 +-------------------+------------+-------------+-------------+
 | Get current patch              | no support  |             |
 +-------------------+------------+-------------+-------------+
-| Change autosaved               |             |             |
+| Change autosaved               | no support  |             |
 +-------------------+------------+-------------+-------------+
 | Manual save msg                |             |             |
 +-------------------+------------+-------------+-------------+
@@ -275,5 +275,6 @@ Zoom MS50g
 * :code:`Blank cells`: Not implemented. It may be supported.
 * :code:`x`: Integrated with PluginsManager API
 * :code:`only API`: Not yet integrated with PluginsManager API
+* :code:`only API:0-2`: :code:`only API`, but only works with 0-2 effects
 * :code:`?`: Unknown. Probably not possible
 * :code:`no support`: Equipment doesn't informs/receive information about

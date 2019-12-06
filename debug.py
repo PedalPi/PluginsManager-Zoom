@@ -30,9 +30,11 @@ class Observer(UpdatesObserver):
 
 
 zoom = ZoomG3v2()
-zoom.connect(ZoomHost())
+zoom.connect()
 zoom.register(Observer())
 
 zoom.load_data()
 
 print('debug here')
+
+zoom.disconnect()

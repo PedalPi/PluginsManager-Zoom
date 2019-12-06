@@ -17,7 +17,11 @@ class ZoomMSMessageDecoder:
     def decode(self, message):
         print(len(message), message)
 
-        if len(message) == 15:
+        if message.type == 'program_change':
+            with self._context as model:
+                model.to_pedalboard(+message.program)
+
+        elif len(message) == 15:
             print('Device info', message.hex())
             print(MidiProtocol.device_identity_reply_decode(message.data))
 
@@ -26,38 +30,23 @@ class ZoomMSMessageDecoder:
 
         # Update current pedalboard
         elif len(message) == 146:
-            data = message.data[0:5] + (0,) * 5 + message.data[5:]
-
-            # TODO: Update current pedalboard instead replace it all
             with self._context as model:
-                self.decode_specific_pedalboard(message.data, ZoomPedalboard(""))
+                current_pedalboard = model.current_pedalboard
+                self.decode_specific_pedalboard(message.data, current_pedalboard)
 
-                #current_pedalboard = model.current_pedalboard
-                #pedalboard = self.decode_specific_pedalboard(data, current_pedalboard)
+        elif len(message) == 156:
+            data = message.data[5:]
 
-                #index = model.current_pedalboard.index
-                #old_pedalboard = model.pedalboards[index]
-                #model.pedalboards[index] = pedalboard
-
-            #print(pedalboard)
-            #print(pedalboard.effects)
-
-        #elif len(message) == 120:
-        #    pedalboard = self.decode_specific_pedalboard(message.data, ZoomPedalboard(""))
-        #    with self._context as model:
-        #        model.pedalboards.append(pedalboard)
+            pedalboard = self.decode_specific_pedalboard(data, ZoomPedalboard(""))
+            with self._context as model:
+                model.pedalboards.append(pedalboard)
 
         else:
-            # Path saved in x position
-            # F0 52 00 5A 32 01 00 00 xx 00 00 00 00 00 F7
-            # Swap xx <--> yy
-            # F0 52 00 5A 32 02 00 00 xx 00 00 yy 00 00 F7
+            print("Not mapped")
             print(message, '\n', message.hex())
             print('Size', len(message))
 
     def decode_specific_pedalboard(self, data, pedalboard: ZoomPedalboard):
-        builder = None#ZoomBuilder(None)
-
         manufacturing_id = data[0]
         device_id = data[1]
         model_number = data[2]
@@ -73,13 +62,11 @@ class ZoomMSMessageDecoder:
         for id_effect in range(6):
             effect, effect_replaced = self._get_effect(data, pedalboard, new_pedalboard, id_effect)
 
-            effect.active = ZoomMSPatch.get_effect_status(data[6:], id_effect)
+            effect.active = ZoomMSPatch.get_effect_status(data, id_effect)
 
             for id_param, param in enumerate(effect.params):
                 param.value = ZoomMSPatch.get_param(data, id_effect, id_param)
 
-            print(effect)
-            '''
             if new_pedalboard:
                 pedalboard.effects.append(effect)
             elif effect_replaced:
@@ -88,14 +75,9 @@ class ZoomMSMessageDecoder:
             else:
                 pass
 
-        pedalboard.level = data[0x5c]
-
         # TODO: Display info
-        # TODO: CTRL SW/PDL
-        # TODO: PDL DST
 
         return pedalboard
-        '''
 
     def _get_effect(self, data, pedalboard, new_pedalboard, id_effect) -> Tuple[ZoomEffect, bool]:
         """
@@ -144,13 +126,13 @@ class ZoomMSMessageDecoder:
 
             if 0x00 == type4:
                 with self._context as model:
-                     print('effect', id_effect, 'active', False)
-                     #model.current_pedalboard.effects[id_effect].active = False
+                     model.current_pedalboard.effects[id_effect].active = False
 
             elif 0x02 <= type4 <= 0x10:
                 id_param = type4 - 2
                 value = (value2 << 7) + value1
 
                 with self._context as model:
-                    print('effect', id_effect, 'param', id_param, 'value', value)
-                    #model.current_pedalboard.effects[id_effect].params[id_param].value = value
+                    model.current_pedalboard.effects[id_effect].params[id_param].value = value
+
+        print(hex(type1), hex(type2), hex(type3), hex(type4))

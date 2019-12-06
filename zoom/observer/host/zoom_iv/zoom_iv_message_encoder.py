@@ -1,5 +1,7 @@
 import mido
 
+from zoom.zoom_model import Manufacturer, ZoomModel
+
 
 class ZoomIVMessageEncoder(object):
     """
@@ -12,7 +14,7 @@ class ZoomIVMessageEncoder(object):
     Thanks sixeight7!
     """
 
-    def __init__(self, manufacturing_id, device_id, model_number):
+    def __init__(self, manufacturing_id: Manufacturer, device_id, model_number: ZoomModel):
         self.manufacturing_id = manufacturing_id
         self.device_id = device_id
         self.model_number = model_number
