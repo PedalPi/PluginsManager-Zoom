@@ -7,7 +7,7 @@ from zoom.zoom_effects_builder import ZoomEffectsBuilder
 from zoom.zoom_model import ZoomModel
 
 
-class ZoomPatchDecoder:
+class ZoomEquipmentPatchDecoder:
     """
     Based on: https://github.com/g200kg/zoom-ms-utility/blob/master/midimessage.md#patch-data-format
     """

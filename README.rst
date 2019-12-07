@@ -54,14 +54,18 @@ A detailed list of support for each device is below.
 
 * `Zoom G3 v2`_
 * `Zoom MS50g v3.x`_
+* `Zoom G1on`_
 
 .. _Zoom G3 v2: #zoom-g3-v2
 .. _Zoom MS50g v3.x: #zoom-ms50g-v3x
+.. _Zoom G1on: #zoom-g1on
 
 Zoom G3 v2
 ~~~~~~~~~~
 
 .. code:: python
+
+   from zoom.zoomg3v2 import ZoomG3v2
 
    # Instantiate
    zoom = ZoomG3v2()
@@ -176,6 +180,8 @@ Zoom MS50g v3.x
 
 .. code:: python
 
+   from zoom.zoomms50gv3 import ZoomMS50gv3
+
    # Instantiate
    zoom = ZoomMS50gv3()
    # Connect the object 'zoom' with the real equipment
@@ -273,6 +279,114 @@ Zoom MS50g v3.x
 * :code:`Blank cells`: Not implemented. It may be supported.
 * :code:`x`: Integrated with PluginsManager API
 * :code:`only API`: Not yet integrated with PluginsManager API
-* :code:`only API:0-2`: :code:`only API`, but only works with 0-2 effects
+* :code:`x:0-2`: :code:`only API`, but only works with 0-2 effects
+* :code:`?`: Unknown. Probably not possible
+* :code:`no support`: Equipment doesn't informs/receive information about
+
+Zoom G1on
+~~~~~~~~~
+
+.. code:: python
+
+   from zoom.zoomg1on import ZoomG1on
+
+   # Instantiate
+   zoom = ZoomG1on()
+   # Connect the object 'zoom' with the real equipment
+   zoom.connect()
+
+   # Load all patches from the equipment
+   zoom.load_data()
+
+   # Disconnect the equipment
+   zoom.disconnect()
+
+
+
+**Columns:**
+
+* :code:`Command`: Feature
+* :code:`Pedalboard`: Information sended by the Zoom G3 equipment
+  in the "pedalboard" message data.
+  These are usually messages about the state of a pedalboard, but it
+  is possible (but not yet verified) that general information about
+  the equipment is also passed, such as battery information, global level,
+  etc ...
+* :code:`Read Change`: Zoom equipment informs a change applied directly in it
+* :code:`Send Change`: API informs changes to the Zoom equipment
+
++-------------------+------------+-------------+-------------+
+|                   | Command                                |
++-------------------+------------+-------------+-------------+
+| Command           | Pedalboard | Read Change | Send Change |
++===================+============+=============+=============+
+| **Pedalboard/Patch data**                                  |
++-------------------+------------+-------------+-------------+
+| Patch Name        | x          | no support  |             |
++-------------------+------------+-------------+-------------+
+| Patch Level       | no support                             |
++-------------------+------------+-------------+-------------+
+| Patch Display pos |            | no support  |             |
++-------------------+------------+-------------+-------------+
+| Effect            | x          |             |             |
++-------------------+------------+-------------+-------------+
+| Effect status     | x          |             | x:0-2       |
++-------------------+------------+-------------+-------------+
+| Param value       | x          |             | x:0-2       |
++-------------------+------------+-------------+-------------+
+| CTRL SW/PDL       | no support                             |
++-------------------+------------+-------------+-------------+
+| PDL DST           | no support                             |
++-------------------+------------+-------------+-------------+
+| Swap effects                   |             |             |
++-------------------+------------+-------------+-------------+
+| Set current patch | no support |             | only API    |
++-------------------+------------+-------------+-------------+
+| **Tunner**                                                 |
++-------------------+------------+-------------+-------------+
+| Tunner on/off     | ?          | no support  | only API    |
++-------------------+------------+-------------+-------------+
+| Tunner+mute on/off| ?          | no support  | only API    |
++-------------------+------------+-------------+-------------+
+| **Replace/swap**                                           |
++-------------------+------------+-------------+-------------+
+| Replace patch                  | no support  |             |
++-------------------+------------+-------------+-------------+
+| Swap patches                   | no support  |             |
++-------------------+------------+-------------+-------------+
+| **Global data**                                            |
++-------------------+------------+-------------+-------------+
+| Global tempo      |            | conflictTAP |             |
++-------------------+------------+-------------+-------------+
+| Global level      | no support                             |
++-------------------+------------+-------------+-------------+
+| Global output     | no support                             |
++-------------------+------------+-------------+-------------+
+| Signal patch      | no support                             |
++-------------------+------------+-------------+-------------+
+| Battery           |            | no support  |             |
++-------------------+------------+-------------+-------------+
+| LCD               |            | no support  |             |
++-------------------+------------+-------------+-------------+
+| Autosave (on off) |            | no support  |             |
++-------------------+------------+-------------+-------------+
+| USB audio volume  | no support                             |
++-------------------+------------+-------------+-------------+
+| **Other messages**                                         |
++-------------------+------------+-------------+-------------+
+| Get current patch              | no support  |             |
++-------------------+------------+-------------+-------------+
+| Change autosaved               | no support  |             |
++-------------------+------------+-------------+-------------+
+| Manual save msg                |             |             |
++-------------------+------------+-------------+-------------+
+
+**Legend:**
+
+* :code:`conflictTAP`: Same message to the 4º effect 7º param value
+* :code:`Blank cells`: Not implemented. It may be supported.
+* :code:`x`: Integrated with PluginsManager API
+* :code:`only API`: Not yet integrated with PluginsManager API
+* :code:`x:0-2`: :code:`only API`, but only works with 0-2 effects
 * :code:`?`: Unknown. Probably not possible
 * :code:`no support`: Equipment doesn't informs/receive information about

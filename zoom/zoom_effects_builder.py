@@ -1,9 +1,9 @@
 import json
 import os
 
-from zoom.database import ZoomMSSeries
+from zoom.database import ZoomMSSeries, ZoomG1on
 from zoom.model.zoom.zoom_effect import ZoomEffect
-from zoom.zoom_model import ZoomModel
+from zoom.zoom_model import ZoomModel, ZoomEquipmentNotImplemented
 
 
 class ZoomEffectsBuilder:
@@ -20,6 +20,12 @@ class ZoomEffectsBuilder:
 
         elif model == ZoomModel.ZoomMS50g:
             self.data = ZoomMSSeries.effectlist
+
+        elif model == ZoomModel.ZoomG1on:
+            self.data = ZoomG1on.effectlist
+
+        else:
+            raise ZoomEquipmentNotImplemented("Equipment not modelled")
 
         # Remove key string in json data
         self.data = {int(k): v for k, v in self.data.items()}
