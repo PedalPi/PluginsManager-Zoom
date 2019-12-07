@@ -52,8 +52,11 @@ A detailed list of support for each device is below.
 
 .. _PluginsManager: https://github.com/PedalPi/PluginsManager
 
-* :ref:`Zoom G3 v2`
-* :ref:`Zoom MS50G v3.x`
+* `Zoom G3 v2`_
+* `Zoom MS50g v3.x`_
+
+.. _Zoom G3 v2: #zoom-g3-v2
+.. _Zoom MS50g v3.x: #zoom-ms50g-v3x
 
 Zoom G3 v2
 ~~~~~~~~~~
