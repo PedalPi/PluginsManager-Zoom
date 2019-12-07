@@ -1,9 +1,9 @@
 from zoom.model.zoom_pedalboard import ZoomPedalboard
-from zoom.observer.host.zoom_patch_decoder import ZoomPatchDecoder
+from zoom.observer.host.base.zoom_equipment_patch_decoder import ZoomEquipmentPatchDecoder
 from zoom.zoom_model import ZoomModel
 
 
-class ZoomG3v2PatchDecoder(ZoomPatchDecoder):
+class ZoomG3v2PatchDecoder(ZoomEquipmentPatchDecoder):
 
     @property
     def effects_status_bits(self):

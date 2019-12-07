@@ -1,9 +1,9 @@
 from zoom.model.zoom_pedalboard import ZoomPedalboard
-from zoom.observer.host.zoom_patch_decoder import ZoomPatchDecoder
+from zoom.observer.host.base.zoom_equipment_patch_decoder import ZoomEquipmentPatchDecoder
 from zoom.zoom_model import ZoomModel
 
 
-class ZoomMSPatchDecoder(ZoomPatchDecoder):
+class ZoomMSPatchDecoder(ZoomEquipmentPatchDecoder):
     """
     Based on: https://github.com/g200kg/zoom-ms-utility/blob/master/midimessage.md#patch-data-format
     """

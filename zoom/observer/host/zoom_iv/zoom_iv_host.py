@@ -1,4 +1,4 @@
-from zoom.observer.host.zoom_equipment_host import ZoomEquipmentHostData
+from zoom.observer.host.base.zoom_equipment_host import ZoomEquipmentHostData
 from zoom.observer.host.zoom_iv.zoom_iv_message_decoder import ZoomIVMessageDecoder
 from zoom.observer.host.zoom_iv.zoom_iv_message_encoder import ZoomIVMessageEncoder
 from zoom.zoom_model import ZoomModel, Manufacturer

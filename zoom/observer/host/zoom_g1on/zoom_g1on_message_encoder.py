@@ -11,12 +11,19 @@ class ZoomG1onMessageEncoder(ZoomEquipmentMessageEncoder):
     """
 
     def set_effect(self, effect_position: int, new_effect: int) -> mido.Message:
-        # FIXME
+        warnings.warn("set_effect is not implemented", NotImplementedWarning)
         return self._zoom_small(effect_position, new_effect, 0x01)
 
     def set_tempo(self, new_value: int) -> mido.Message:
-        # FIXME
+        warnings.warn("set_tempo is not implemented", NotImplementedWarning)
         return self._zoom_small(0x06, new_value, 0x08)
+
+    def set_current_pedalboard_level(self, level: int) -> mido.Message:
+        """
+        Set the current patch level
+        """
+        warnings.warn("set_current_pedalboard_level is not implemented", NotImplementedWarning)
+        return None
 
     def tuner(self, on: bool, bypass=None) -> mido.Message:
         if bypass is not None:

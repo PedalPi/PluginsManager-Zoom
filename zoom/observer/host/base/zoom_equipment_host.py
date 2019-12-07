@@ -1,5 +1,6 @@
 import mido
 
+from zoom.observer.host.base.zoom_equipment_message_encoder import ZoomEquipmentMessageEncoder
 from zoom.observer.host.protocol import MidiProtocol
 from zoom.observer.host.zoom_connection import ZoomConnection
 
@@ -28,7 +29,7 @@ class ZoomEquipmentHost:
         self.connection = ZoomConnection(self.host_data.name)
         self.connection.callback = lambda message: self.decode(message)
 
-        self.message_encoder = MessageEncoder(
+        self.message_encoder: ZoomEquipmentMessageEncoder = MessageEncoder(
             self.host_data.manufacturing_id,
             self.host_data.device_id,
             self.host_data.model_number

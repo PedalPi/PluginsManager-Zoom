@@ -6,7 +6,7 @@ from pluginsmanager.observer.observable_list import ObservableList
 
 from zoom.exception.exceptions import InvalidPedalboardException
 from zoom.model.zoom_pedalboard import ZoomPedalboard
-from zoom.observer.host.zoom_equipment_host import ZoomEquipmentHostData
+from zoom.observer.host.base.zoom_equipment_host import ZoomEquipmentHostData
 from zoom.observer.zoom_change import ZoomChange
 from zoom.observer.zoom_host import ZoomHost
 

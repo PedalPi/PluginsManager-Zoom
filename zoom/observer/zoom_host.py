@@ -4,7 +4,7 @@ from pluginsmanager.model.effect import Effect
 from pluginsmanager.observer.host_observer.host_observer import HostObserver
 from pluginsmanager.observer.update_type import UpdateType
 
-from zoom.observer.host.zoom_equipment_host import ZoomEquipmentHost, ZoomEquipmentHostData
+from zoom.observer.host.base.zoom_equipment_host import ZoomEquipmentHostData, ZoomEquipmentHost
 from zoom.observer.zoom_change import ZoomChange
 
 
