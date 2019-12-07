@@ -24,7 +24,7 @@ with open(filename) as data_file:
     data_list = json.load(data_file)
 
 data = {
-    "None": {
+    107: {
         "name": "None",
         "category": "None",
         "parameters": [],
@@ -33,10 +33,11 @@ data = {
 }
 
 for element in data_list:
-    data[element['name']] = element
+    index = plugins_categories[element['name']]['id']
+    data[index] = element
     del element['offset']
 
-    data[element['name']]['id'] = plugins_categories[element['name']]['id']
+    data[index]['id'] = index
 
     for parameter in element['parameters']:
         del parameter['offset']

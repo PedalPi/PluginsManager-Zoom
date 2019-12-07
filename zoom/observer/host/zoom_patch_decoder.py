@@ -12,18 +12,18 @@ class ZoomPatchDecoder:
     Based on: https://github.com/g200kg/zoom-ms-utility/blob/master/midimessage.md#patch-data-format
     """
 
-    @abstractmethod
     @property
+    @abstractmethod
     def effects_status_bits(self):
         return None
 
-    @abstractmethod
     @property
+    @abstractmethod
     def effects_bits(self):
         return None
 
-    @abstractmethod
     @property
+    @abstractmethod
     def params_bits(self):
         return None
 
@@ -49,6 +49,8 @@ class ZoomPatchDecoder:
 
         for id_param, param in enumerate(effect.params):
             param.value = self.decode_param_value(data, id_effect, id_param)
+
+        return effect
 
     def put_effect(self, pedalboard, effect, id_effect):
         if id_effect == len(pedalboard.effects):
