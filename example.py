@@ -3,7 +3,7 @@ from time import sleep
 from pluginsmanager.observer.updates_observer import UpdatesObserver
 
 from zoom.observer.zoom_host import ZoomHost
-from zoom.zoom_builder import ZoomBuilder
+from zoom.zoom_builder import ZoomEffectsBuilder
 from zoom.zoomg3v2 import ZoomG3v2
 
 
@@ -70,7 +70,7 @@ for effect in zoom.current_pedalboard.effects:
         sleep(.5)
 
 
-builder = ZoomBuilder(None)
+builder = ZoomEffectsBuilder(None)
 
 for effect in zoom.current_pedalboard.effects:
     index = effect.index

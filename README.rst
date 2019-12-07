@@ -1,5 +1,5 @@
-MidiMultistompController
-========================
+Pedal Pi - PluginsManager - Zoom
+================================
 
 ..
   .. image:: https://travis-ci.org/PedalPi/PluginsManager.svg?branch=master
@@ -13,14 +13,14 @@ MidiMultistompController
       :alt: Code coverage
 
 
-Simplified API for effects unit control.
+Controls zoom equipments using the Pedal Pi API.
 
 ..
    **Documentation:**
       http://pedalpi-pluginsmanager.readthedocs.io/
 
 **Code:**
-   https://github.com/PedalPi/PluginsManager
+   https://github.com/PedalPi/PluginsManager-Zoom
 
 ..
    **Python Package Index:**
@@ -41,10 +41,6 @@ Probably PedalPi requirements
 
    sudo apt-get install portaudio19-dev
 
-Examples
---------
-
-Coming soon
 
 Supported Equipment
 -------------------
@@ -56,22 +52,27 @@ A detailed list of support for each device is below.
 
 .. _PluginsManager: https://github.com/PedalPi/PluginsManager
 
-* Zoom G3 v2
-* Zoom MS50G (comming soon)
+* `Zoom G3 v2`_
+* `Zoom MS50g v3.x`_
 
+.. _Zoom G3 v2: #zoom-g3-v2
+.. _Zoom MS50g v3.x: #zoom-ms50g-v3x
 
-Zoom G3
-~~~~~~~
+Zoom G3 v2
+~~~~~~~~~~
 
 .. code:: python
 
    # Instantiate
    zoom = ZoomG3v2()
    # Connect the object 'zoom' with the real equipment
-   zoom.connect(ZoomHost())
+   zoom.connect()
 
    # Load all patches from the equipment
    zoom.load_data()
+
+   # Disconnect the equipment
+   zoom.disconnect()
 
 
 
@@ -142,7 +143,7 @@ Zoom G3
 +-------------------+------------+-------------+-------------+
 | Autosave (on off) |            |             | ?           |
 +-------------------+------------+-------------+-------------+
-| USB audio         |            | no support  | ?           |
+| USB audio volume  |            | no support  | ?           |
 +-------------------+------------+-------------+-------------+
 | **Other messages**                                         |
 +-------------------+------------+-------------+-------------+
@@ -170,9 +171,108 @@ Zoom G3
   to the equipment is terminated before the autosave saves it.
 
 
-Zoom MS50g
-~~~~~~~~~~
+Zoom MS50g v3.x
+~~~~~~~~~~~~~~~
 
 .. code:: python
 
-   # TODO
+   # Instantiate
+   zoom = ZoomMS50gv3()
+   # Connect the object 'zoom' with the real equipment
+   zoom.connect()
+
+   # Load all patches from the equipment
+   zoom.load_data()
+
+   # Disconnect the equipment
+   zoom.disconnect()
+
+
+
+**Columns:**
+
+* :code:`Command`: Feature
+* :code:`Pedalboard`: Information sended by the Zoom G3 equipment
+  in the "pedalboard" message data.
+  These are usually messages about the state of a pedalboard, but it
+  is possible (but not yet verified) that general information about
+  the equipment is also passed, such as battery information, global level,
+  etc ...
+* :code:`Read Change`: Zoom equipment informs a change applied directly in it
+* :code:`Send Change`: API informs changes to the Zoom equipment
+
++-------------------+------------+-------------+-------------+
+|                   | Command                                |
++-------------------+------------+-------------+-------------+
+| Command           | Pedalboard | Read Change | Send Change |
++===================+============+=============+=============+
+| **Pedalboard/Patch data**                                  |
++-------------------+------------+-------------+-------------+
+| Patch Name        | x          | no support  |             |
++-------------------+------------+-------------+-------------+
+| Patch Level       | no support                             |
++-------------------+------------+-------------+-------------+
+| Patch Display pos |            | no support  |             |
++-------------------+------------+-------------+-------------+
+| Effect            | x          |             |             |
++-------------------+------------+-------------+-------------+
+| Effect status     | x          |             | x:0-2       |
++-------------------+------------+-------------+-------------+
+| Param value       | x          |             | x:0-2       |
++-------------------+------------+-------------+-------------+
+| CTRL SW/PDL       | no support                             |
++-------------------+------------+-------------+-------------+
+| PDL DST           | no support                             |
++-------------------+------------+-------------+-------------+
+| Swap effects                   |             |             |
++-------------------+------------+-------------+-------------+
+| Set current patch | no support |             | only API    |
++-------------------+------------+-------------+-------------+
+| **Tunner**                                                 |
++-------------------+------------+-------------+-------------+
+| Tunner on/off     | ?          | no support  | only API    |
++-------------------+------------+-------------+-------------+
+| Tunner+mute on/off| ?          | no support  | only API    |
++-------------------+------------+-------------+-------------+
+| **Replace/swap**                                           |
++-------------------+------------+-------------+-------------+
+| Replace patch                  | no support  |             |
++-------------------+------------+-------------+-------------+
+| Swap patches                   | no support  |             |
++-------------------+------------+-------------+-------------+
+| **Global data**                                            |
++-------------------+------------+-------------+-------------+
+| Global tempo      |            | conflictTAP |             |
++-------------------+------------+-------------+-------------+
+| Global level      | no support                             |
++-------------------+------------+-------------+-------------+
+| Global output     | no support                             |
++-------------------+------------+-------------+-------------+
+| Signal patch      | no support                             |
++-------------------+------------+-------------+-------------+
+| Battery           |            | no support  |             |
++-------------------+------------+-------------+-------------+
+| LCD               |            | no support  |             |
++-------------------+------------+-------------+-------------+
+| Autosave (on off) |            | no support  |             |
++-------------------+------------+-------------+-------------+
+| USB audio volume  | no support                             |
++-------------------+------------+-------------+-------------+
+| **Other messages**                                         |
++-------------------+------------+-------------+-------------+
+| Get current patch              | no support  |             |
++-------------------+------------+-------------+-------------+
+| Change autosaved               | no support  |             |
++-------------------+------------+-------------+-------------+
+| Manual save msg                |             |             |
++-------------------+------------+-------------+-------------+
+
+**Legend:**
+
+* :code:`conflictTAP`: Same message to the 4º effect 7º param value
+* :code:`Blank cells`: Not implemented. It may be supported.
+* :code:`x`: Integrated with PluginsManager API
+* :code:`only API`: Not yet integrated with PluginsManager API
+* :code:`only API:0-2`: :code:`only API`, but only works with 0-2 effects
+* :code:`?`: Unknown. Probably not possible
+* :code:`no support`: Equipment doesn't informs/receive information about

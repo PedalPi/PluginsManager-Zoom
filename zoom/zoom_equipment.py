@@ -1,4 +1,4 @@
-from enum import Enum
+from typing import Type
 
 from pluginsmanager.banks_manager import BanksManager
 from pluginsmanager.model.bank import Bank
@@ -6,13 +6,9 @@ from pluginsmanager.observer.observable_list import ObservableList
 
 from zoom.exception.exceptions import InvalidPedalboardException
 from zoom.model.zoom_pedalboard import ZoomPedalboard
+from zoom.observer.host.zoom_equipment_host import ZoomEquipmentHostData
 from zoom.observer.zoom_change import ZoomChange
 from zoom.observer.zoom_host import ZoomHost
-
-
-class ZoomSignal(Enum):
-    LEFT_TO_RIGHT = 0
-    RIGHT_TO_LEFT = 1
 
 
 class ZoomEquipment(BanksManager):
@@ -22,19 +18,18 @@ class ZoomEquipment(BanksManager):
 
         self.host: ZoomHost = None
 
-        self._max_pedalboards = 100
+        self._total_pedalboards: int = None
         self._tempo = 120
         self._autosave = False
-        self._signal_flow = ZoomSignal.RIGHT_TO_LEFT
 
         self._current_pedalboard_id = 0
 
         self.append(Bank("Default Patches"))
 
-    def connect(self, host: ZoomHost):
-        self.host = host
-        self.register(host)
-        host.connect(self)
+    def _connect(self, equipment_host: Type[ZoomEquipmentHostData]):
+        self.host = ZoomHost(equipment_host)
+        self.register(self.host)
+        self.host.connect(self)
 
     def load_data(self):
         self.host.load_data()
@@ -42,6 +37,10 @@ class ZoomEquipment(BanksManager):
     def disconnect(self):
         self.host.close()
         self.host = None
+
+    @property
+    def total_pedalboards(self) -> int:
+        return self._total_pedalboards
 
     @property
     def pedalboards(self) -> ObservableList:
@@ -52,7 +51,7 @@ class ZoomEquipment(BanksManager):
         return self.pedalboards[self._current_pedalboard_id]
 
     def to_next_pedalboard(self):
-        if self._current_pedalboard_id == self._max_pedalboards - 1:
+        if self._current_pedalboard_id == self.total_pedalboards - 1:
             pedalboard_index = 0
         else:
             pedalboard_index = self._current_pedalboard_id + 1
@@ -61,15 +60,15 @@ class ZoomEquipment(BanksManager):
 
     def to_previous_pedalboard(self):
         if self._current_pedalboard_id == 0:
-            pedalboard_index = self._max_pedalboards - 1
+            pedalboard_index = self.total_pedalboards - 1
         else:
             pedalboard_index = self._current_pedalboard_id - 1
 
         self.to_pedalboard(pedalboard_index)
 
     def to_pedalboard(self, pedalboard_index: int):
-        if pedalboard_index < 0 or pedalboard_index >= self._max_pedalboards:
-            raise InvalidPedalboardException(f'Pedalboard index need be between [{0}-{self._max_pedalboards - 1}]')
+        if pedalboard_index < 0 or pedalboard_index >= self.total_pedalboards:
+            raise InvalidPedalboardException(f'Pedalboard index need be between [{0}-{self.total_pedalboards - 1}]')
 
         self._current_pedalboard_id = pedalboard_index
         # Do not notify change
