@@ -1,5 +1,5 @@
-MidiMultistompController
-========================
+Pedal Pi - PluginsManager - Zoom
+================================
 
 ..
   .. image:: https://travis-ci.org/PedalPi/PluginsManager.svg?branch=master
@@ -13,14 +13,14 @@ MidiMultistompController
       :alt: Code coverage
 
 
-Simplified API for effects unit control.
+Controls zoom equipments using the Pedal Pi API.
 
 ..
    **Documentation:**
       http://pedalpi-pluginsmanager.readthedocs.io/
 
 **Code:**
-   https://github.com/PedalPi/PluginsManager
+   https://github.com/PedalPi/PluginsManager-Zoom
 
 ..
    **Python Package Index:**
@@ -41,10 +41,6 @@ Probably PedalPi requirements
 
    sudo apt-get install portaudio19-dev
 
-Examples
---------
-
-Coming soon
 
 Supported Equipment
 -------------------
@@ -56,12 +52,11 @@ A detailed list of support for each device is below.
 
 .. _PluginsManager: https://github.com/PedalPi/PluginsManager
 
-* Zoom G3 v2
-* Zoom MS50G (comming soon)
+* :ref:`Zoom G3 v2`
+* :ref:`Zoom MS50G v3.x`
 
-
-Zoom G3
-~~~~~~~
+Zoom G3 v2
+~~~~~~~~~~
 
 .. code:: python
 
@@ -173,8 +168,8 @@ Zoom G3
   to the equipment is terminated before the autosave saves it.
 
 
-Zoom MS50g
-~~~~~~~~~~
+Zoom MS50g v3.x
+~~~~~~~~~~~~~~~
 
 .. code:: python
 
