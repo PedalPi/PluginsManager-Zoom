@@ -42,9 +42,9 @@ class ZoomHost(HostObserver):
     def load_data(self):
         for i in range(self.model.total_pedalboards):
             sleep(0.04)
-            self.host.connection.send(self.host.message_encoder.specified_patch_details(i))
+            self.host.connection.send_all(self.host.message_encoder.specified_patch_details(i))
 
-        self.host.connection.send(self.host.message_encoder.current_patch_number())
+        self.host.connection.send_all(self.host.message_encoder.current_patch_number())
 
     # FIXME - on_current_pedalboard_changed
     # FIXME - on_pedalboard_updated
@@ -67,15 +67,15 @@ class ZoomHost(HostObserver):
 
         if identifier == ZoomChange.PEDALBOARD_CURRENT_LEVEL:
             pedalboard = args[0]
-            self.host.connection.send(self.host.message_encoder.set_current_pedalboard_level(pedalboard.level))
+            self.host.connection.send_all(self.host.message_encoder.set_current_pedalboard_level(pedalboard.level))
 
         elif identifier == ZoomChange.PEDALBOARD_CURRENT:
             pedalboard, index = args
-            self.host.connection.send(self.host.message_encoder.to_patch(index))
+            self.host.connection.send_all(self.host.message_encoder.to_patch(index))
 
     def _replace_effect(self, effect):
         message = self.host.message_encoder.set_effect(effect.index, effect.plugin['id'])
-        self.host.connection.send(message)
+        self.host.connection.send_all(message)
 
     def _add_effect(self, effect):
         # Do nothing
@@ -95,11 +95,11 @@ class ZoomHost(HostObserver):
 
     def _set_param_value(self, param):
         message = self.host.message_encoder.set_param(param.effect.index, param.index, param.value)
-        self.host.connection.send(message)
+        self.host.connection.send_all(message)
 
     def _set_effect_status(self, effect: Effect):
         message = self.host.message_encoder.effect_status(effect.index, effect.active)
-        self.host.connection.send(message)
+        self.host.connection.send_all(message)
 
 
 class ZoomHostContext:

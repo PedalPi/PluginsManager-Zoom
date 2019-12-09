@@ -1,4 +1,5 @@
 import warnings
+from typing import Collection
 
 import mido
 
@@ -17,24 +18,25 @@ class ZoomIVMessageEncoder(ZoomEquipmentMessageEncoder):
     Thanks sixeight7!
     """
 
-    def set_effect(self, effect_position: int, new_effect: int) -> mido.Message:
-        return self._zoom_small(effect_position, new_effect, 0x01)
+    def set_effect(self, effect_position: int, new_effect: int) -> Collection[mido.Message]:
+        return [self._zoom_small(effect_position, new_effect, 0x01)]
 
-    def set_current_pedalboard_level(self, level: int) -> mido.Message:
-        return self.zoom_sysex([0x31, 0x06, 0x02, level, 0])
+    def set_current_pedalboard_level(self, level: int) -> Collection[mido.Message]:
+        return [self.zoom_sysex([0x31, 0x06, 0x02, level, 0])]
 
     #######################
     # Other configurations
     #######################
-    def set_tempo(self, new_value: int) -> mido.Message:
-        return self._zoom_small(0x06, new_value, 0x08)
+    def set_tempo(self, new_value: int) -> Collection[mido.Message]:
+        return [self._zoom_small(0x06, new_value, 0x08)]
 
-    def tuner(self, on: bool, bypass=None) -> mido.Message:
+    def tuner(self, on: bool, bypass=None) -> Collection[mido.Message]:
         if bypass is not None:
             warnings.warn("bypass parameter only work with None value. Not implemented for other values", NotImplementedWarning)
+            return []
 
         status_number = 0x64 if on else 0
-        return mido.Message('control_change', control=0x75, value=status_number)
+        return [mido.Message('control_change', control=0x75, value=status_number)]
 
 
 ## Decode

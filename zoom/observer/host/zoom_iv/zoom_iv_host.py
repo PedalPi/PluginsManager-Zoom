@@ -11,9 +11,9 @@ class ZoomIVHost(ZoomEquipmentHostData):
 
     def __init__(self):
         super().__init__()
-        self.manufacturing_id = Manufacturer.Zoom
+        self.manufacturer = Manufacturer.Zoom
         self.device_id = 0x00
-        self.model_number = ZoomModel.ZoomG3v2
+        self.model = ZoomModel.ZoomG3v2
 
         self.name = 'ZOOM G Series MIDI 1'
 
